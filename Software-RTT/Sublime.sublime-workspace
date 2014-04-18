@@ -1,0 +1,366 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"rt_k",
+				"rt_kprintf"
+			],
+			[
+				"digi",
+				"digitalWrite	Arduino digitalWrite"
+			],
+			[
+				"ana",
+				"analogWrite	Arduino analogWrite"
+			]
+		]
+	},
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 60.0,
+		"selected_items":
+		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"clip",
+				"Clipboard History"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"case",
+				"Convert Case: Title Case"
+			],
+			[
+				"ctags",
+				"Package Control: List Packages"
+			],
+			[
+				"add",
+				"Project: Add Folder"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				":w ",
+				":w - Save"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 514.0
+	},
+	"console":
+	{
+		"height": 188.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": false,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/User/C.sublime-settings",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/Alignment/Base File.sublime-settings",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/board.h",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/User/SublimeClang.sublime-settings",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/All Autocomplete/README.md",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
+		"/E/Workspace/AlarmClock/Software-RTT/Sublime.sublime-workspace",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/CTags/README.rst",
+		"/E/Workspace/AlarmClock/Software-RTT/include/rtthread.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/.tags",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/REG.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/startup.c",
+		"/E/Documents/学科概论报告.md",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/SmartMarkdown/readme.md",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/OmniMarkupPreviewer/Default (Windows).sublime-keymap",
+		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/OmniMarkupPreviewer/README.md",
+		"/D/Engineering/Arduino/libraries/SPI/examples/BarometricPressureSensor/BarometricPressureSensor.ino",
+		"/E/Desktop/wubi86.txt",
+		"/D/Engineering/Arduino/libraries/SPI/keywords.txt",
+		"/D/Engineering/Arduino/libraries/SPI/examples/DigitalPotControl/DigitalPotControl.ino",
+		"/E/Workspace/Arduino/libraries/DS3231/Examples/DS3231_TEST/DS3231_TEST.ino",
+		"/E/Workspace/Arduino/libraries/DS3231/DS3231.cpp",
+		"/E/Desktop/测试程序/STM32F103C_TEST_APP/STM32F10x.s",
+		"/E/Workspace/STM32F103/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_cl.s",
+		"/E/Workspace/STM32F103/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_md_vl.s",
+		"/E/Workspace/MMouse/Troy/APP/top_algor/MouseAlgor.c",
+		"/C/Temp/movie.txt",
+		"/E/Workspace/STM32F407/TEST/APP/main.c",
+		"/E/Workspace/STM32F407/TEST/APP/main.h",
+		"/E/Workspace/STM32F407/TEST/APP/Conf.h",
+		"/E/Workspace/STM32F407/TEST/APP/Conf.c",
+		"/E/Workspace/STM32F407/uCOS-III/Cfg/Template/os_cfg.h",
+		"/E/Workspace/STM32F407/TEST/APP/stm32f4xx_it.c",
+		"/E/Workspace/STM32F407/Template/APP/stm32f4xx_conf.h",
+		"/E/Desktop/basickick.cpp",
+		"/E/Workspace/Arduino/libraries/LiquidCrystal_I2C/LiquidCrystal_I2C.cpp",
+		"/E/Workspace/Arduino/libraries/LiquidCrystal_I2C/LiquidCrystal_I2C.h",
+		"/E/Workspace/STM32F4xx/Test_Encoder/APP/stm32f4xx_it.c",
+		"/E/Workspace/STM32F4xx/stm32f4入门考核/final_model.m",
+		"/E/Workspace/STM32F4xx/Test_NVIC/APP/main.c",
+		"/E/Workspace/STM32F4xx/Test_TIM/APP/main.c",
+		"/E/Workspace/STC/Marquee/main.c",
+		"/E/Workspace/STM32F4xx/REF/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Project/STM32F4xx_StdPeriph_Examples/TIM/7PWM_Output/main.c",
+		"/E/Workspace/STM32F4xx/Template/APP/stm32f4xx_it.c",
+		"/E/Workspace/STC/HELLOWORLD/main.c",
+		"/E/Workspace/STM32F4xx/system_stm32f4xx.c",
+		"/E/Workspace/STM32F4xx/Test_USART/APP/main.c",
+		"/E/Workspace/STM32F4xx/Test_GPIO/APP/main.c",
+		"/E/Workspace/STM32F4xx/REF/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Project/STM32F4xx_StdPeriph_Examples/TIM/7PWM_Output/system_stm32f4xx.c",
+		"/E/Workspace/STM32F4xx/REF/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Project/STM32F4xx_StdPeriph_Examples/TIM/7PWM_Output/stm32f4xx_it.c",
+		"/E/Workspace/STM32F4xx/Template/BSP/stm32f4xx.h",
+		"/E/Workspace/STM32F4xx/Template/BSP/stm32f4xx_conf.h",
+		"/E/Workspace/STM32F4xx/Libraries/STM32_EVAL/STM3240_41_G_EVAL/stm324xg_eval.h",
+		"/E/tk.cpp",
+		"/E/Workspace/STM32F4xx/Template/startup_stm32f4xx.s",
+		"/E/Workspace/STM32F4xx/Template/BSP/system_stm32f4xx.c",
+		"/E/Workspace/STC/Libraries/inc/STC15F2Kxx.h",
+		"/C/Program Files (x86)/Rime/weasel-0.9.27/data/wubi86.dict.yaml",
+		"/C/Program Files (x86)/Rime/weasel-0.9.27/data/weasel.yaml",
+		"/C/Users/troy/AppData/Roaming/Rime/weasel.custom.yaml",
+		"/C/Users/troy/AppData/Roaming/Rime/wubi86.schema.yaml",
+		"/E/Downloads/Wuhan-东湖高新 (2)/css/aqicn.css",
+		"/C/Users/troy/AppData/Roaming/Rime/symbols.yaml",
+		"/E/Downloads/Wuhan-东湖高新 (2)/js/jquery.js",
+		"/E/Downloads/Wuhan-东湖高新 (2)/js/aqicn.js",
+		"/E/Downloads/Wuhan-东湖高新 (2)/js/analytics.js",
+		"/C/Users/troy/AppData/Local/Temp/Temp1_Wuhan-东湖高新.zip/css/aqicn.css",
+		"/C/Users/troy/AppData/Local/Temp/Temp1_Wuhan-东湖高新.zip/gadget.xml",
+		"/C/Users/troy/AppData/Roaming/Rime/default.yaml",
+		"/C/Users/troy/AppData/Roaming/Rime/default.custom.yaml",
+		"/C/Users/troy/AppData/Roaming/Rime/wubi86.custom.yaml",
+		"/C/Users/troy/AppData/Roaming/Rime/weasel.yaml",
+		"/C/Users/troy/AppData/Local/Temp/Temp1_BlackTheme.zip/res/drawable/semc_theme_preview.xml",
+		"/E/Documents/ARM/STM32F4-Discovery_FW_V1.1.0/Project/Demonstration/stm32f4xx_it.h",
+		"/E/Desktop/DEMO/CMSIS/stm32f4xx_conf.h",
+		"/E/Desktop/res/drawable/semc_theme_preview.xml",
+		"/E/Documents/ARM/STM32F4-Discovery_FW_V1.1.0/Libraries/CMSIS/ST/STM32F4xx/Include/stm32f4xx.h",
+		"/E/Documents/ARM/STM32F4-Discovery_FW_V1.1.0/Project/Audio_playback_and_record/src/stm32f4xx_it.c",
+		"/E/Documents/ARM/STM32F4-Discovery_FW_V1.1.0/Project/Audio_playback_and_record/inc/main.h",
+		"/E/Documents/ARM/STM32F4-Discovery_FW_V1.1.0/Project/Peripheral_Examples/IO_Toggle/stm32f4xx_it.h",
+		"/E/Desktop/DEMO/CMSIS/system_stm32f4xx.c",
+		"/E/Documents/Arduino/TEST_Virbation/TEST_Virbation.ino",
+		"/C/Users/troy/AppData/Local/Temp/_tc/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Project/STM32F4xx_StdPeriph_Examples/GPIO/IOToggle/stm32f4xx_conf.h",
+		"/E/Documents/ARM/M4/st/stm32f4xxUSB例程/serialUSB/startup_stm32f4xx.s",
+		"/E/Documents/ARM/M4/st/stm32f4xxUSB例程/serialUSB/usbd_conf.h",
+		"/E/Documents/ARM/M4/st/stm32f4xxUSB例程/serialUSB/main.c",
+		"/E/Documents/Arduino/Test_LCD1602_IIC/Test_LCD1602_IIC.ino",
+		"/E/Desktop/Data.csv",
+		"/E/Documents/ARM/M4/st/STM32F4DISCOVERY/STM32F4DISCOVERY 开发板的例程包/STM32F4-Discovery_FW_V1.0.1/Utilities/STM32F4-Discovery/stm32f4_discovery.h",
+		"/C/Program Files (x86)/Rime/weasel-0.9.27/data/default.yaml",
+		"/C/Windows/SysWOW64/config/systemprofile/AppData/Roaming/Rime/default.yaml",
+		"/H/CRACK/CRACK.txt",
+		"/E/Documents/Arduino/tmp/tmp.ino",
+		"/D/Engineering/Arduino/examples/03.Analog/AnalogWriteMega/AnalogWriteMega.ino",
+		"/D/Engineering/Arduino/libraries/EEPROM/EEPROM.h",
+		"/D/Engineering/Arduino/libraries/EEPROM/EEPROM.cpp",
+		"/E/Desktop/MouseAlgor.txt",
+		"/E/Engineering/VS_MouseAlgor/MouseAlgor.cpp",
+		"/E/Downloads/desktop.ini",
+		"/E/Documents/Arduino/libraries/HMC5843/HMC5843.cpp",
+		"/E/Documents/Arduino/libraries/HMC5843/HMC5843.h",
+		"/E/Engineering/VS_MouseAlgro_V2/MouseAlgor.cpp",
+		"/E/Desktop/tmp.cpp",
+		"/E/Desktop/Wallpaper/FDD.v",
+		"/D/Engineering/Altera/9.1/quartus/bin64/license.DAT",
+		"/E/vimwiki/html/index.html",
+		"/E/vimwiki/html/main.html",
+		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/wubi86.schema.yaml",
+		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/weasel.yaml",
+		"/E/vimwiki/html/main.css",
+		"/D/Portable/FlyFi/Resources/Data/FLYFI_XML_USERDATA.xml",
+		"/D/Engineering/Altera/13.0/quartus/bin64/license.dat",
+		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/default.yaml",
+		"/D/AHKs/AHK.ahk"
+	],
+	"find":
+	{
+		"height": 43.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"auto_",
+			"\n#",
+			"ctrl\\+spqce",
+			"ctrl\\+f",
+			"font",
+			" \"",
+			"history",
+			"\\t*$",
+			"[ \\t]*$",
+			" *$",
+			"\\s*$",
+			"//.*$",
+			"HOSTID=06242c852eb1"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"HOSTID=a41731cfcef8"
+		],
+		"reverse": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"incremental_find":
+	{
+		"height": 40.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.Desktop":
+	{
+		"height": 154.0
+	},
+	"output.TEST_Virbation":
+	{
+		"height": 154.0
+	},
+	"output.Test_LCD1602_IIC":
+	{
+		"height": 154.0
+	},
+	"output.clang":
+	{
+		"height": 172.0
+	},
+	"output.stino_log":
+	{
+		"height": 154.0
+	},
+	"output.tmp":
+	{
+		"height": 154.0
+	},
+	"replace":
+	{
+		"height": 74.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"appl",
+				"bsp/stm32f10x/applications/application.c"
+			],
+			[
+				"app",
+				"bsp/stm32f10x/applications/application.c"
+			],
+			[
+				"board.h",
+				"bsp/stm32f10x/drivers/board.h"
+			],
+			[
+				"applic",
+				"bsp/stm32f10x/applications/application.c"
+			],
+			[
+				"appli",
+				"bsp/stm32f10x/applications/application.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
