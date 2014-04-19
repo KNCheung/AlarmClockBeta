@@ -81,13 +81,13 @@ void rt_thread_ir_entry(void* parameter)
             // 100+
             case 0x98: ToggleREG(); break;
             // 200+
-            case 0xB0: rt_event_send(en_event,EVENT_TEMP_CLOCK); break;
+            case 0xB0: break;
             // 1
-            case 0x30: rt_event_send(en_event,EVENT_DATE);  break;
+            case 0x30: rt_event_send(en_event,EVENT_TEMP_CLOCK); break;
             // 2
-            case 0x18: rt_event_send(en_event,EVENT_TEMP); break;
+            case 0x18: rt_event_send(en_event,EVENT_DATE); break;
             // 3
-            case 0x7A: break;
+            case 0x7A: rt_event_send(en_event,EVENT_TEMP); break;
             // 4
             case 0x10: break;
             // 5
