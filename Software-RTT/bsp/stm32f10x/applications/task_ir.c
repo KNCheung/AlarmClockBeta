@@ -59,35 +59,35 @@ void rt_thread_ir_entry(void* parameter)
           switch ((uint8_t)((IRCode>>8)%256))
           { //DECODE
             // CH-
-            case 0xA2: break;
+            case 0xA2: ToggleREG(); break;
             // CH
             case 0x62: break;
             // CH+
-            case 0xE2: break;
+            case 0xE2: rt_event_send(en_event,EVENT_TEMP_CLOCK); break;
             // PREV
-            case 0x22: break;
+            case 0x22: rt_event_send(en_event,EVENT_DATE); break;
             // NEXT
-            case 0x02: break;
+            case 0x02: rt_event_send(en_event,EVENT_TEMP); break;
             // PLAY/PAUSE
-            case 0xC2: break;
+            case 0xC2: rt_event_send(en_event,EVENT_COUNTER); break;
             // VOL-
-            case 0xE0: break;
+            case 0xE0: rt_event_send(en_event,EVENT_POMODORO); break;
             // VOL+
-            case 0xA8: break;
+            case 0xA8: rt_event_send(en_event,EVENT_POMODORO_BREAK); break;
             // PLAY/PAUSE
-            case 0x90: break;
+            case 0x90: rt_event_send(en_event,EVENT_POMODORO_REST);break;
             // 0
-            case 0x68: reboot(); break;
+            case 0x68:  break;
             // 100+
-            case 0x98: ToggleREG(); break;
+            case 0x98: break;
             // 200+
             case 0xB0: break;
             // 1
-            case 0x30: rt_event_send(en_event,EVENT_TEMP_CLOCK); break;
+            case 0x30: break;
             // 2
-            case 0x18: rt_event_send(en_event,EVENT_DATE); break;
+            case 0x18: break;
             // 3
-            case 0x7A: rt_event_send(en_event,EVENT_TEMP); break;
+            case 0x7A: break;
             // 4
             case 0x10: break;
             // 5
@@ -95,11 +95,11 @@ void rt_thread_ir_entry(void* parameter)
             // 6
             case 0x5A: break;
             // 7
-            case 0x42: rt_event_send(en_event,EVENT_POMODORO); break;
+            case 0x42: break;
             // 8
-            case 0x4A: rt_event_send(en_event,EVENT_POMODORO_BREAK); break;
+            case 0x4A: break;
             // 9
-            case 0x52: rt_event_send(en_event,EVENT_POMODORO_REST); break;
+            case 0x52: break;
             // ERROR
             default: rt_kprintf("INVALID CODE : %x\n",(uint8_t)((IRCode>>8)%256));break;
           }

@@ -18,7 +18,7 @@ void rt_thread_pomodoro_entry(void* parameter)
   while (1)
   {
     rt_event_recv(en_event,EVENT_POMODORO,RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e);
-    rt_event_send(reg_event,(1<<REG_POMODORO));
+    rt_event_send(reg_event,REG_POMODORO_MSK);
     state = 0;
     do 
     {
@@ -84,6 +84,6 @@ void rt_thread_pomodoro_entry(void* parameter)
       }
     }while(rt_event_recv(en_event,EVENT_POMODORO,RT_EVENT_FLAG_AND,500,&e) != RT_EOK);
     rt_event_recv(en_event, EVENT_POMODORO|EVENT_POMODORO_BREAK|EVENT_POMODORO_REST,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
-    rt_event_recv(reg_event, (1<<REG_POMODORO),RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+    rt_event_recv(reg_event, REG_POMODORO_MSK, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0 ,&e);
   }
 }

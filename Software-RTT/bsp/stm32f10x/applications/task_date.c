@@ -20,8 +20,8 @@ void rt_thread_date_entry(void* parameter)
     d = IIC_Read(DS3231_ADDRESS, DS3231_DAY);
     reg_output[REG_DATE]=REG_Convert(REG_HexToReg(d%16),REG_HexToReg(d/16),REG_HexToReg(m%16),REG_HexToReg((m/16)&0x7),1,1);
     
-    rt_event_send(reg_event,1<<REG_DATE);
+    rt_event_send(reg_event,REG_DATE_MSK);
     WAIT_FOR_RELEASE;
-    rt_event_recv(reg_event,(1<<REG_DATE),RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+    rt_event_recv(reg_event,REG_DATE_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   }
 }

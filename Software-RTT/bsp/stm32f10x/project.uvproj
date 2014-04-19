@@ -444,6 +444,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\task_clock.c</FilePath>
             </File>
+            <File>
+              <FileName>task_counter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_counter.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

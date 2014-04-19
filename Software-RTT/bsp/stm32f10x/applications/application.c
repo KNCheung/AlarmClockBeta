@@ -48,6 +48,7 @@
 #include <task_pomodoro.h>
 #include <task_date.h>
 #include <task_clock.h>
+#include <task_counter.h>
 
 #include <IIC.h>
 #include <REG.h>
@@ -56,33 +57,25 @@ ALIGN(RT_ALIGN_SIZE)
 
 static rt_uint8_t reg_stack[256];
 static struct rt_thread reg_thread;
-void rt_thread_reg_entry(void* parameter);
-#define PRIO_REG RT_THREAD_PRIORITY_MAX-3
 
 static rt_uint8_t clock_stack[256];
 static struct rt_thread clock_thread;
-void rt_thread_clock_entry(void* parameter);
 rt_timer_t update_clock_timer,update_second_timer;
-#define PRIO_CLOCK RT_THREAD_PRIORITY_MAX-5
+
 static rt_uint8_t ir_stack[256];
 static struct rt_thread ir_thread;
-void rt_thread_ir_entry(void* parameter);
-#define PRIO_IR 1
 
 static rt_uint8_t temp_stack[256];
 static struct rt_thread temp_thread;
-void rt_thread_temp_entry(void* parameter);
-#define PRIO_TEMP 6
 
 static rt_uint8_t date_stack[256];
 static struct rt_thread date_thread;
-void rt_thread_date_entry(void* parameter);
-#define PRIO_DATE 7
 
 static rt_uint8_t pomodoro_stack[256];
 static struct rt_thread pomodoro_thread;
-void rt_thread_pomodoro_entry(void* parameter);
-#define PRIO_POMODORO 3
+
+static rt_uint8_t counter_stack[256];
+static struct rt_thread counter_thread;
 
 rt_mq_t ir_mq = RT_NULL;
 rt_event_t en_event = RT_NULL;
@@ -257,7 +250,17 @@ void rt_init_thread_entry(void* parameter)
     if (result == RT_EOK)
       rt_thread_startup(&pomodoro_thread);
     
-
+    result = rt_thread_init(&counter_thread,
+                            "Counter",
+                            rt_thread_counter_entry,
+                            RT_NULL,
+                            (rt_uint8_t*)counter_stack,
+                            sizeof(counter_stack),
+                            PRIO_COUNTER,
+                            5);
+    if (result == RT_EOK)
+      rt_thread_startup(&counter_thread);
+    
 }
 
 int rt_application_init(void)

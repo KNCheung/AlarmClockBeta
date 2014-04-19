@@ -20,8 +20,8 @@ void rt_thread_temp_entry(void* parameter)
     temp = IIC_Read(DS3231_ADDRESS, DS3231_TEMP_MSB);
     reg_output[REG_TEMP]=REG_Convert(0x27,REG_HexToReg(temp%10),REG_HexToReg(temp/10),REG_HexToReg(0xff),1,1);
     
-    rt_event_send(reg_event,(1<<REG_TEMP));
+    rt_event_send(reg_event,REG_TEMP_MSK);
     WAIT_FOR_RELEASE;
-    rt_event_recv(reg_event,(1<<REG_TEMP),RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+    rt_event_recv(reg_event,REG_TEMP_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   }
 }

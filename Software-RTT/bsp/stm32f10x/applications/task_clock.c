@@ -36,7 +36,7 @@ void rt_thread_clock_entry(void* parameter)
                                        1, \
                                        RT_TIMER_FLAG_ACTIVATED | RT_TIMER_FLAG_ONE_SHOT | RT_TIMER_FLAG_HARD_TIMER);
   rt_timer_start(update_clock_timer);
-  rt_event_send(reg_event,(1<<REG_CLOCK));
+  rt_event_send(reg_event,REG_CLOCK_MSK);
   rt_event_send(en_event,EVENT_CLOCK);
   while (1)
   {
@@ -57,9 +57,9 @@ void rt_thread_clock_entry(void* parameter)
     if (e&EVENT_TEMP_CLOCK)
     {
       reg_output[REG_TEMP_CLOCK]=reg_output[REG_CLOCK];
-      rt_event_send(reg_event,(1<<REG_TEMP_CLOCK));
+      rt_event_send(reg_event,REG_TEMP_CLOCK_MSK);
       WAIT_FOR_RELEASE;
-      rt_event_recv(reg_event,(1<<REG_TEMP_CLOCK),RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+      rt_event_recv(reg_event,REG_TEMP_CLOCK_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
     }
   }
 }

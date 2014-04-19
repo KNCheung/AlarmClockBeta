@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"RT_EVE",
+				"RT_EVENT_FLAG_CLEAR"
+			],
+			[
 				"rt_ev",
 				"rt_event_send"
 			],
@@ -68,7 +72,7 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 375.0,
+		"height": 251.0,
 		"selected_items":
 		[
 			[
@@ -128,7 +132,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 455.0
+		"width": 514.0
 	},
 	"console":
 	{
@@ -145,19 +149,23 @@
 	},
 	"file_history":
 	[
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.c",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_counter.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/REG.c",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_reg.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_reg.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_pomodoro.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_temp.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_date.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_counter.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_reg.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.h",
+		"/D/Engineering/Sublime Text 2/task_counter.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_date.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_temp.h",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_temp.c",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.c",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.h",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/cmd.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/cmd.c",
 		"/E/Workspace/AlarmClock/Software-RTT/src/ipc.c",
@@ -174,7 +182,6 @@
 		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/CTags/README.rst",
 		"/E/Workspace/AlarmClock/Software-RTT/include/rtthread.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/.tags",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/startup.c",
 		"/E/Documents/学科概论报告.md",
 		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/SmartMarkdown/readme.md",
@@ -269,10 +276,7 @@
 		"/E/Desktop/tmp.cpp",
 		"/E/Desktop/Wallpaper/FDD.v",
 		"/D/Engineering/Altera/9.1/quartus/bin64/license.DAT",
-		"/E/vimwiki/html/index.html",
-		"/E/vimwiki/html/main.html",
-		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/wubi86.schema.yaml",
-		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/weasel.yaml"
+		"/E/vimwiki/html/index.html"
 	],
 	"find":
 	{
@@ -290,6 +294,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"1<<REG_DATE",
 			"fndebug(voi",
 			"ds3231_address",
 			"ds3231_addrea",
@@ -339,18 +344,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -399,6 +397,10 @@
 		"selected_items":
 		[
 			[
+				"reg.c",
+				"bsp/stm32f10x/drivers/REG.c"
+			],
+			[
 				"appli",
 				"bsp/stm32f10x/applications/application.h"
 			],
@@ -433,6 +435,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 169.0,
+	"side_bar_width": 233.0,
 	"status_bar_visible": true
 }

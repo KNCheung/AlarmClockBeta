@@ -6,6 +6,7 @@
 
 extern rt_event_t en_event;
 extern rt_event_t reg_event;
+extern uint8_t clock_s;
 
 uint32_t reg_output[REG_SCREEN_NUMBER];
 
@@ -35,15 +36,16 @@ void rt_thread_reg_entry(void* parameter)
 
 void ToggleREG(void)
 {
-  rt_uint32_t e;
-  if (REG_State())
-  {
-    REG_Off();
-    rt_event_recv(en_event,EVENT_REG, RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,0,&e);
-    rt_kprintf("\n  REG is Turned Off\n");
-  }else{
-    rt_event_send(en_event,EVENT_REG);
-    REG_On();
-    rt_kprintf("\n  REG is Turned On\n");
-  }
+	rt_uint32_t e;
+	uint8_t t;
+	if (REG_State())
+		{
+    	REG_Off();
+    	rt_event_recv(en_event,EVENT_REG, RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,0,&e);
+    	rt_kprintf("\n  REG is Turned Off\n");
+  	}else{
+    	rt_event_send(en_event,EVENT_REG);
+    	REG_On();
+    	rt_kprintf("\n  REG is Turned On\n");
+  	}
 }
