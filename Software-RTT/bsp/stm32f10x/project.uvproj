@@ -414,6 +414,36 @@
               <FileType>1</FileType>
               <FilePath>applications\startup.c</FilePath>
             </File>
+            <File>
+              <FileName>task_date.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_date.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_ir.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_ir.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_pomodoro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_pomodoro.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_reg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_reg.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_temp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_temp.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_clock.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

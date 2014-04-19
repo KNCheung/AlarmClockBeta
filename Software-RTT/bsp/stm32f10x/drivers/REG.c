@@ -45,12 +45,17 @@ void REG_Init(void)
   REG_Off();
 }
 
-void REG_Set(rt_uint8_t a,rt_uint8_t b,rt_uint8_t c,rt_uint8_t d,rt_uint8_t comment,rt_uint8_t dot)
+uint32_t REG_Convert(rt_uint8_t a,rt_uint8_t b,rt_uint8_t c,rt_uint8_t d,rt_uint8_t comment,rt_uint8_t dot)
 {
-  REG_out[0]=a;
-  REG_out[1]=b;
-  REG_out[2]=c + (dot==0?0x80:0x00);
-  REG_out[3]=d + (comment==0?0x80:0x00);
+  return (a*0x00000001+b*0x00000100+(c + (dot?0x80:0x00))*0x00010000+(d + (comment?0x80:0x00))*0x01000000);
+}
+
+void REG_Set(uint32_t setting)
+{
+	REG_out[0] = setting & 0xFF;
+	REG_out[1] = (setting>>8) & 0xFF;
+	REG_out[2] = (setting>>16) & 0xFF;
+	REG_out[3] = (setting>>24) & 0xFF;
 }
 
 rt_uint8_t REG_HexToReg(rt_uint8_t in)
@@ -76,5 +81,5 @@ rt_uint8_t REG_HexToReg(rt_uint8_t in)
     case 0x0F:temp=0x0E;break;
     default: temp=0xFF;break;
   }
-  return (temp|0x80);
+  return (temp&0x7F);
 }

@@ -5,7 +5,8 @@
 #include <stm32f10x.h>
 
 void REG_Init(void);
-void REG_Set(rt_uint8_t a,rt_uint8_t b,rt_uint8_t c,rt_uint8_t d,rt_uint8_t comment,rt_uint8_t dot);
+uint32_t REG_Convert(rt_uint8_t a,rt_uint8_t b,rt_uint8_t c,rt_uint8_t d,rt_uint8_t comment,rt_uint8_t dot);
+void REG_Set(uint32_t);
 void REG_Update(void);
 rt_uint8_t REG_HexToReg(rt_uint8_t);
 

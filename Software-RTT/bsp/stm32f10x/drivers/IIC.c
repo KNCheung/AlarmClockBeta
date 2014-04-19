@@ -21,7 +21,6 @@ static void IIC_Stop(void);
 static void IIC_WriteByte(uint8_t Data);
 static uint8_t IIC_ReadByte(void);
 static uint8_t IIC_GetACK(void);
-static void IIC_SendACK(void);
 
 static void IIC_Start(void) 
 { 
@@ -102,16 +101,6 @@ static uint8_t IIC_GetACK(void)
   SCL_L; 
   return SUCCESS; 
 } 
-
-static void IIC_SendACK(void)
-{
-  IIC_Delay();
-  SDA_L;
-  IIC_Delay();
-  SDA_H;
-  IIC_Delay();
-  SDA_L;
-}
 
 static void IIC_Delay(void)
 {

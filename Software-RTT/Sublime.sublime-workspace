@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"rt_ev",
+				"rt_event_send"
+			],
+			[
+				"_",
+				"_TASK_IR_H_"
+			],
+			[
+				"rt_eve",
+				"rt_event_recv"
+			],
+			[
+				"rt_event_",
+				"rt_event_create"
+			],
+			[
+				"rt_mute",
+				"rt_mutex_create"
+			],
+			[
+				"DS3231_C",
+				"DS3231_CON_STA"
+			],
+			[
+				"DS",
+				"DS3231_ADDRESS"
+			],
+			[
+				"DS3231_",
+				"DS3231_A1_M"
+			],
+			[
+				"DS3231_A1",
+				"DS3231_A1_S"
+			],
+			[
+				"DS3231",
+				"DS3231_ADDRESS"
+			],
+			[
+				"ds32",
+				"DS3231_ADDRESS"
+			],
+			[
+				"DS32",
+				"DS3231_ADDRESS,DS3231_MINUTE"
+			],
+			[
 				"rt_k",
 				"rt_kprintf"
 			],
@@ -20,16 +68,16 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 60.0,
+		"height": 375.0,
 		"selected_items":
 		[
 			[
-				"remove",
-				"Package Control: Remove Package"
-			],
-			[
 				":w",
 				":w - Save"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
 			],
 			[
 				"install",
@@ -80,7 +128,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 514.0
+		"width": 455.0
 	},
 	"console":
 	{
@@ -97,6 +145,22 @@
 	},
 	"file_history":
 	[
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_clock.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/REG.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_reg.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_reg.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_pomodoro.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_date.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_date.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_temp.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_temp.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.c",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/task_ir.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/cmd.h",
+		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/cmd.c",
+		"/E/Workspace/AlarmClock/Software-RTT/src/ipc.c",
 		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/User/C.sublime-settings",
 		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/Alignment/Base File.sublime-settings",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/board.h",
@@ -111,7 +175,6 @@
 		"/E/Workspace/AlarmClock/Software-RTT/include/rtthread.h",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/.tags",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/application.c",
-		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/drivers/REG.c",
 		"/E/Workspace/AlarmClock/Software-RTT/bsp/stm32f10x/applications/startup.c",
 		"/E/Documents/学科概论报告.md",
 		"/C/Users/troy/AppData/Roaming/Sublime Text 2/Packages/SmartMarkdown/readme.md",
@@ -209,12 +272,7 @@
 		"/E/vimwiki/html/index.html",
 		"/E/vimwiki/html/main.html",
 		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/wubi86.schema.yaml",
-		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/weasel.yaml",
-		"/E/vimwiki/html/main.css",
-		"/D/Portable/FlyFi/Resources/Data/FLYFI_XML_USERDATA.xml",
-		"/D/Engineering/Altera/13.0/quartus/bin64/license.dat",
-		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/default.yaml",
-		"/D/AHKs/AHK.ahk"
+		"/C/Program Files (x86)/Rime/weasel-0.9.26/data/weasel.yaml"
 	],
 	"find":
 	{
@@ -232,6 +290,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"fndebug(voi",
+			"ds3231_address",
+			"ds3231_addrea",
 			"auto_",
 			"\n#",
 			"ctrl\\+spqce",
@@ -255,7 +316,7 @@
 			"",
 			"HOSTID=a41731cfcef8"
 		],
-		"reverse": true,
+		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
@@ -278,11 +339,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -308,6 +376,10 @@
 	{
 		"height": 172.0
 	},
+	"output.exec":
+	{
+		"height": 166.0
+	},
 	"output.stino_log":
 	{
 		"height": 154.0
@@ -327,6 +399,10 @@
 		"selected_items":
 		[
 			[
+				"appli",
+				"bsp/stm32f10x/applications/application.h"
+			],
+			[
 				"appl",
 				"bsp/stm32f10x/applications/application.c"
 			],
@@ -340,10 +416,6 @@
 			],
 			[
 				"applic",
-				"bsp/stm32f10x/applications/application.c"
-			],
-			[
-				"appli",
 				"bsp/stm32f10x/applications/application.c"
 			]
 		],
@@ -361,6 +433,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 169.0,
 	"status_bar_visible": true
 }
