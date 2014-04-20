@@ -45,6 +45,7 @@ void ToggleREG(void)
     	rt_kprintf("\n  REG is Turned Off\n");
   	}else{
     	rt_event_send(en_event,EVENT_REG);
+    	rt_thread_delay(20);
     	REG_On();
     	rt_kprintf("\n  REG is Turned On\n");
   	}

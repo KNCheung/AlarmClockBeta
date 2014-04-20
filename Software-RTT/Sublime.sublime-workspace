@@ -72,7 +72,7 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 251.0,
+		"height": 110.0,
 		"selected_items":
 		[
 			[
@@ -132,7 +132,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 514.0
+		"width": 418.0
 	},
 	"console":
 	{
@@ -294,6 +294,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"	  ",
+			"^\\t+  ",
+			"^  ",
 			"1<<REG_DATE",
 			"fndebug(voi",
 			"ds3231_address",
@@ -318,6 +321,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"\\t",
 			"",
 			"HOSTID=a41731cfcef8"
 		],
@@ -397,6 +401,10 @@
 		"selected_items":
 		[
 			[
+				"app",
+				"bsp/stm32f10x/applications/application.c"
+			],
+			[
 				"reg.c",
 				"bsp/stm32f10x/drivers/REG.c"
 			],
@@ -406,10 +414,6 @@
 			],
 			[
 				"appl",
-				"bsp/stm32f10x/applications/application.c"
-			],
-			[
-				"app",
 				"bsp/stm32f10x/applications/application.c"
 			],
 			[
