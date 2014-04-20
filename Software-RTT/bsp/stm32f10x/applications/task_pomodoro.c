@@ -45,7 +45,11 @@ void rt_thread_pomodoro_entry(void* parameter)
             break;
           }
           reg_output[REG_POMODORO]=REG_Convert(REG_HexToReg(22),REG_HexToReg(22),REG_HexToReg(22),REG_HexToReg(22),1,1);
-          rt_thread_delay(RT_TICK_PER_SECOND*1);
+          if (rt_event_recv(en_event, EVENT_POMODORO|EVENT_POMODORO_BREAK|EVENT_POMODORO_REST,RT_EVENT_FLAG_OR,RT_TICK_PER_SECOND*1,&e)==RT_EOK)
+          {
+            state++;
+            break;
+          }
           reg_output[REG_POMODORO]=REG_Convert(REG_HexToReg(22),REG_HexToReg(22),REG_HexToReg(0),REG_HexToReg(0),1,1);
           break;
         case 3: //Check commands & Initialization for Break or Rest
@@ -73,7 +77,11 @@ void rt_thread_pomodoro_entry(void* parameter)
             break;
           }
           reg_output[REG_POMODORO]=REG_Convert(REG_HexToReg(22),REG_HexToReg(22),REG_HexToReg(22),REG_HexToReg(22),1,1);
-          rt_thread_delay(RT_TICK_PER_SECOND*1);
+          if (rt_event_recv(en_event, EVENT_POMODORO|EVENT_POMODORO_BREAK|EVENT_POMODORO_REST,RT_EVENT_FLAG_OR,RT_TICK_PER_SECOND*1,&e)==RT_EOK)
+          {
+            state++;
+            break;
+          }
           reg_output[REG_POMODORO]=REG_Convert(REG_HexToReg(0),REG_HexToReg(0),REG_HexToReg(22),REG_HexToReg(22),1,1);
           break;
         case 6: //Check Commands

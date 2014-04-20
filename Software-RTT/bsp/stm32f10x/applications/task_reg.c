@@ -37,7 +37,6 @@ void rt_thread_reg_entry(void* parameter)
 void ToggleREG(void)
 {
 	rt_uint32_t e;
-	uint8_t t;
 	if (REG_State())
 		{
     	REG_Off();

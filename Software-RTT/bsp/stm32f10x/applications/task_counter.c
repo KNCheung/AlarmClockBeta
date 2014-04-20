@@ -35,10 +35,18 @@ void rt_thread_counter_entry(void* parameter)
 				                                      REG_HexToReg((interval/3600)%10),
 				                                      REG_HexToReg((interval/3600)/10),
 				                                      1,0);
-
 			}
 		}while(rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND*1, &e));
-    while (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER, &e));
+    while (1)
+    {
+      if (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND/2, &e)==RT_EOK)
+        break;
+      REG_Off();
+      if (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND/2, &e)==RT_EOK)
+        break;
+      REG_On();
+    }
+    REG_On();
 		rt_event_recv(reg_event, REG_COUNTER_MSK, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 0, &e);
 	}
 }

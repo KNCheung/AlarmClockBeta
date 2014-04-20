@@ -77,7 +77,7 @@ void rt_thread_ir_entry(void* parameter)
             // PLAY/PAUSE
             case 0x90: rt_event_send(en_event,EVENT_POMODORO_REST);break;
             // 0
-            case 0x68:  break;
+            case 0x68: break;
             // 100+
             case 0x98: break;
             // 200+
