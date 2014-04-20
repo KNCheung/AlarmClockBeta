@@ -308,8 +308,8 @@ void Print_Setting(void)
 	uint8_t i;
 	for (i=0;i<SETTING_LENGTH;i++)
 	{
-	rt_kprintf("%d ",Setting[i]);
-	if (i%9==0)
+	rt_kprintf("\t%d ",Setting[i]);
+	if (i%8==0)
 		rt_kprintf("\n");
 	}
 	rt_kprintf("\n");

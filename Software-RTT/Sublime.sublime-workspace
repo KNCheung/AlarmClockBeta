@@ -72,7 +72,7 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 110.0,
+		"height": 375.0,
 		"selected_items":
 		[
 			[
@@ -132,7 +132,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 418.0
+		"width": 514.0
 	},
 	"console":
 	{

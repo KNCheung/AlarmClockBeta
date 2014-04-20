@@ -1,4 +1,7 @@
 # Alarm Clock #
+Just an alarm clock with assistant functions.
+Base on [STM32F103R8T6](http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1031/LN1565) and [RT-Thread](http://www.rt-thread.org/) 1.2.1
+
 ## To-do List ##
 - 使能RTC外设
 - 添加倒计时器
@@ -10,6 +13,7 @@
 ## 2014-04-20 ##
 - 添加计时器
 - 去除重新开屏时产生的闪屏bug
+- 计时器加入复位前暂停显示
 
 ## 2014-04-19 ##
 - 大幅度改动系统结构，使之能按优先级，在番茄钟临时查看时钟、日期等信息。
