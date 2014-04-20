@@ -22,7 +22,7 @@ void rt_thread_counter_entry(void* parameter)
 		{
 			curr_tim = clock_h*3600+clock_m*60+clock_s;
 			interval = (curr_tim+86400-start_tim)%86400;
-			if (interval<3600)
+			if (interval<1800)
 			{
 				reg_output[REG_COUNTER] = REG_Convert(REG_HexToReg(interval%10),
 				                                      REG_HexToReg((interval%60)/10),
@@ -38,6 +38,7 @@ void rt_thread_counter_entry(void* parameter)
 
 			}
 		}while(rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND*1, &e));
+    while (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER, &e));
 		rt_event_recv(reg_event, REG_COUNTER_MSK, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 0, &e);
 	}
 }
