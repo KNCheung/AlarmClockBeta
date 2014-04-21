@@ -449,6 +449,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\task_counter.c</FilePath>
             </File>
+            <File>
+              <FileName>task_protect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_protect.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -483,6 +488,21 @@
               <FileName>IR.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\IR.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\drivers\stm32f10x_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\drivers\stm32f10x_it.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -828,6 +848,16 @@
               <FileName>components.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\components\init\components.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>File</GroupName>
+          <Files>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\README.md</FilePath>
             </File>
           </Files>
         </Group>

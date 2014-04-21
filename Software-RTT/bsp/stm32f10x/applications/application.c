@@ -49,9 +49,11 @@
 #include <task_date.h>
 #include <task_clock.h>
 #include <task_counter.h>
+#include <task_protect.h>
 
 #include <IIC.h>
 #include <REG.h>
+#include <ADC.h>
 
 ALIGN(RT_ALIGN_SIZE)
 
@@ -76,6 +78,9 @@ static struct rt_thread pomodoro_thread;
 
 static rt_uint8_t counter_stack[256];
 static struct rt_thread counter_thread;
+
+static rt_uint8_t protect_stack[256];
+static struct rt_thread protect_thread;
 
 rt_mq_t ir_mq = RT_NULL;
 rt_event_t en_event = RT_NULL;
@@ -261,6 +266,16 @@ void rt_init_thread_entry(void* parameter)
 	if (result == RT_EOK)
 	  rt_thread_startup(&counter_thread);
 	
+  	result = rt_thread_init(&protect_thread,
+	                        "Protect",
+	                        rt_thread_protect_entry,
+	                        RT_NULL,
+	                        (rt_uint8_t*)protect_stack,
+	                        sizeof(protect_stack),
+	                        PRIO_PROTECT,
+	                        5);
+	if (result == RT_EOK)
+	  rt_thread_startup(&protect_thread);
 }
 
 int rt_application_init(void)
@@ -291,15 +306,7 @@ FINSH_FUNCTION_EXPORT(reboot,Reboot the MCU)
 
 void fnDebug(uint8_t a,uint8_t b,uint8_t c)
 {
-	uint8_t t;
-	t = IIC_Read(DS3231_ADDRESS, b);
-	if (a)
-	{
-		IIC_Write(DS3231_ADDRESS, b, c);
-	}
-	rt_kprintf("%x\n",t);
-	//lp();
-	return;
+  rt_kprintf("%lx\n",TIM_GetCounter(TIM3));
 }
 FINSH_FUNCTION_EXPORT_ALIAS(fnDebug,debug,Debug Function)
 
@@ -371,3 +378,19 @@ void lp(void)
 }
 FINSH_FUNCTION_EXPORT(lp , Low Power Mode)
 
+void Set_Time(uint8_t Y,uint8_t M,uint8_t D,uint8_t w, uint8_t h,uint8_t m, uint8_t s)
+{
+  IIC_Write(DS3231_ADDRESS, DS3231_SECOND , ((s/10)<<4)|(s%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_MINUTE , ((m/10)<<4)|(m%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_HOUR , ((h/10)<<4)|(h%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_WEEKDAY , ((w/10)<<4)|(w%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_YEAR , ((Y/10)<<4)|(Y%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_MONTH , ((M/10)<<4)|(M%10));
+  IIC_Write(DS3231_ADDRESS, DS3231_DAY , ((D/10)<<4)|(D%10));  
+  time();
+  return;
+}
+FINSH_FUNCTION_EXPORT(Set_Time , Set the time store in the DS3231)
+
+extern uint8_t voltage;
+FINSH_VAR_EXPORT(voltage, finsh_type_uchar, The Power Voltage)
