@@ -10,6 +10,7 @@ Base on [STM32F103R8T6](http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1031/LN
 - 将ToggleREG、休眠键、重启键合并
 - 保存当前工作状态至EEPROM
 - 给DS3231增加一个电容，减少冲击电流
+- 增加唤醒屏幕功能
 
 ## 2014-04-21 ##
 - 增加电源电压监测，防止过放，在finsh的voltage可以读取 (tag:v1.3.0)

@@ -16,6 +16,8 @@ void rt_thread_reg_entry(void* parameter)
   uint8_t i;
   REG_Init();
   REG_On();
+  for (i=0;i<REG_SCREEN_NUMBER;i++)
+    reg_output[i] = 0XBF;
   rt_event_send(en_event,EVENT_REG);
   reg_event = rt_event_create("REGManag",RT_IPC_FLAG_FIFO);
   while (1)
