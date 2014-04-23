@@ -19,6 +19,7 @@ void rt_thread_protect_entry(void* parameter)
   rt_event_recv(reg_event,REG_PROTECT_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   while (1)
   {
+    voltage = GetVoltage();
     if (voltage<=108)
     {
       while (1)
