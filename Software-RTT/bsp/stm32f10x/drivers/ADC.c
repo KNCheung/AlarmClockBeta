@@ -1,6 +1,7 @@
 #include <stm32f10x.h>
 #include <rtthread.h>
 
+char ADC_Running;
 void ADC_Enable(void)
 {
   ADC_InitTypeDef usrADC;
@@ -39,6 +40,7 @@ uint16_t GetVoltage(void)
 {
   uint16_t tmp[8],t;
   uint8_t i,j;
+  ADC_Running = 1;
   ADC_Enable();
   ADC_ResetCalibration(ADC1);
   rt_thread_delay(5);
@@ -60,6 +62,7 @@ uint16_t GetVoltage(void)
   ADC_SoftwareStartConvCmd(ADC1,DISABLE);
   
   ADC_Disable();
+  ADC_Running = 0;
   t = (tmp[2]+tmp[3]+tmp[4]+tmp[5])/4;
   t = (uint16_t)(t*0.0325447f);
   return t;

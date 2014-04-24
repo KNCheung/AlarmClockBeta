@@ -17,7 +17,7 @@ void REG_Push(rt_uint8_t ch)
   rt_uint8_t i;
   for (i=8;i;i--)
   {
-    GPIO_WriteBit(REG_PORT,REG_SER,ch>>7);
+    GPIO_WriteBit(REG_PORT,REG_SER,(ch>>7)?Bit_SET:Bit_RESET);
     ch<<=1;
     GPIO_SetBits(REG_PORT,REG_SECLK);
     GPIO_ResetBits(REG_PORT,REG_SECLK);

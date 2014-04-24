@@ -14,12 +14,12 @@
         <TargetCommonOption>
           <Device>STM32F103ZE</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <Cpu>IRAM(0x20000000-0x2000FFFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) CPUTYPE("Cortex-M3")</Cpu>
+          <Cpu>IROM(0x08000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M3") CLOCK(72000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"STARTUP\ST\STM32F10x.s" ("STM32 Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O14 -S0 -C0 -N00("ARM Cortex-M3") -D00(1BA00477) -L00(4) -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000)</FlashDriverDll>
+          <StartupFile></StartupFile>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000 -FP0($$Device:STM32F103ZE$Flash\STM32F10x_512.FLM))</FlashDriverDll>
           <DeviceId>4216</DeviceId>
-          <RegisterFile>stm32f10x_lib.h</RegisterFile>
+          <RegisterFile>$$Device:STM32F103ZE$Device\Include\stm32f10x.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -29,14 +29,14 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>SFD\ST\STM32F10xx\STM32F10xxE.sfr</SFDFile>
+          <SFDFile>$$Device:STM32F103ZE$SVD\STM32F103xx.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>ST\STM32F10x\</RegisterFilePath>
-          <DBRegisterFilePath>ST\STM32F10x\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -102,13 +102,13 @@
         </CommonProperty>
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments></SimDllArguments>
-          <SimDlgDll>DARMSTM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pSTM32F103ZE</SimDlgDllArguments>
+          <SimDllArguments> -REMAP</SimDllArguments>
+          <SimDlgDll>DCM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM3</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMSTM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pSTM32F103ZE</TargetDlgDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM3</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -171,7 +171,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -503,6 +503,16 @@
               <FileName>stm32f10x_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\drivers\stm32f10x_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>DS18B20.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\DS18B20.C</FilePath>
+            </File>
+            <File>
+              <FileName>TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\TIM.c</FilePath>
             </File>
           </Files>
         </Group>

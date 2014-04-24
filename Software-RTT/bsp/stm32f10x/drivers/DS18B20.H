@@ -1,8 +1,7 @@
 #ifndef __DS18B20_H_
 #define __DS18B20_H_
 
-#include "includes.h"
-
+#include <stdint.h>
 //====REGISTER====
 //====COMMAND====
 #define DS18B20_SEARCH_ROM		0XF0
@@ -17,13 +16,7 @@
 #define DS18B20_RECALL				0XB8
 #define DS18B20_READ_POWER_SUPPLY		0XB4
 
-uint8_t OneWire_ReadChar(void);
-BitAction OneWire_ReadBit(void);
-void OneWire_WriteChar(uint8_t);
-void OneWire_WriteBit(BitAction);
 void OneWire_Init(void);
-ErrorStatus OneWire_Reset(void);
-
 void DS18B20_StartConvTemp(void);
 float DS18B20_ReadTemp(void);
 

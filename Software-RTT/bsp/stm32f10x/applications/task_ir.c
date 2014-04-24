@@ -17,20 +17,19 @@ void rt_thread_ir_entry(void* parameter)
   uint8_t RFlag;
   IR_Init();
   IR_Enable();
-  ir_mq = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
   while (1)
   {
     rt_mq_recv(ir_mq,&TS,sizeof(uint16_t),RT_WAITING_FOREVER);
     switch (state)
     {
       case 0:
-        if ((1336<=TS)&&(TS<=1344))
+        if ((1236<=TS)&&(TS<=1444))
         {
           state = 1;
           IRCode = 0;
           RFlag = 0;
         }
-        else if (RFlag && (((4000<=TS)&&(TS<=4050))||((9550<=TS)&&(TS<=9620))))
+        else if (RFlag && (((3500<=TS)&&(TS<=4500))||((9350<=TS)&&(TS<=9820))))
           state = 100;
         else
         {
@@ -42,9 +41,9 @@ void rt_thread_ir_entry(void* parameter)
       case 11:case 12:case 13:case 14:case 15:case 16:case 17:case 18:case 19:case 20:
       case 21:case 22:case 23:case 24:case 25:case 26:case 27:case 28:case 29:case 30:
       case 31:case 32:
-        if ((100<=TS)&&(TS<=120))
+        if ((80<=TS)&&(TS<=160))
           IRCode*=2;
-        else if ((210<=TS)&&(TS<=235))
+        else if ((180<=TS)&&(TS<=250))
           IRCode=IRCode*2+1;
         else 
         {

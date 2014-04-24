@@ -26,21 +26,6 @@
 #include <components.h>
 #endif  /* RT_USING_COMPONENTS_INIT */
 
-#ifdef RT_USING_DFS
-/* dfs filesystem:ELM filesystem init */
-#include <dfs_elm.h>
-/* dfs Filesystem APIs */
-#include <dfs_fs.h>
-#endif
-
-#ifdef RT_USING_RTGUI
-#include <rtgui/rtgui.h>
-#include <rtgui/rtgui_server.h>
-#include <rtgui/rtgui_system.h>
-#include <rtgui/driver.h>
-#include <rtgui/calibration.h>
-#endif
-
 #include <application.h>
 #include <task_temp.h>
 #include <task_ir.h>
@@ -82,6 +67,8 @@ static struct rt_thread counter_thread;
 static rt_uint8_t protect_stack[256];
 static struct rt_thread protect_thread;
 
+	rt_thread_t init_thread;
+
 rt_mq_t ir_mq = RT_NULL;
 rt_event_t en_event = RT_NULL;
 rt_event_t reg_event = RT_NULL;
@@ -96,24 +83,6 @@ void Setting_Write(void);
 
 extern uint32_t reg_output[REG_SCREEN_NUMBER];
 
-#ifdef RT_USING_RTGUI
-rt_bool_t cali_setup(void)
-{
-	rt_kprintf("cali setup entered\n");
-	return RT_FALSE;
-}
-
-void cali_store(struct calibration_data *data)
-{
-	rt_kprintf("cali finished (%d, %d), (%d, %d)\n",
-	           data->min_x,
-	           data->max_x,
-	           data->min_y,
-	           data->max_y);
-}
-#endif /* RT_USING_RTGUI */
-
-
 void rt_init_thread_entry(void* parameter)
 {
 	rt_err_t result;
@@ -127,47 +96,6 @@ void rt_init_thread_entry(void* parameter)
 #ifdef  RT_USING_FINSH
 	finsh_set_device(RT_CONSOLE_DEVICE_NAME);
 #endif  /* RT_USING_FINSH */
-
-	/* Filesystem Initialization */
-#if defined(RT_USING_DFS) && defined(RT_USING_DFS_ELMFAT)
-	/* mount sd card fat partition 1 as root directory */
-	if (dfs_mount("sd0", "/", "elm", 0, 0) == 0)
-	{
-	    rt_kprintf("File System initialized!\n");
-	}
-	else
-	    rt_kprintf("File System initialzation failed!\n");
-#endif  /* RT_USING_DFS */
-
-#ifdef RT_USING_RTGUI
-	{
-	    extern void rt_hw_lcd_init();
-	    extern void rtgui_touch_hw_init(void);
-
-	    rt_device_t lcd;
-
-	    /* init lcd */
-	    rt_hw_lcd_init();
-
-	    /* init touch panel */
-	    rtgui_touch_hw_init();
-
-	    /* find lcd device */
-	    lcd = rt_device_find("lcd");
-
-	    /* set lcd device as rtgui graphic driver */
-	    rtgui_graphic_set_device(lcd);
-
-#ifndef RT_USING_COMPONENTS_INIT
-	    /* init rtgui system server */
-	    rtgui_system_server_init();
-#endif
-
-	    calibration_set_restore(cali_setup);
-	    calibration_set_after(cali_store);
-	    calibration_init();
-	}
-#endif /* #ifdef RT_USING_RTGUI */
 	
 	result = rt_thread_init(&reg_thread,
 	                        "REG",
@@ -177,9 +105,18 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(reg_stack),
 	                        PRIO_REG,
 	                        2);
-	if (result == RT_EOK)
-	  rt_thread_startup(&reg_thread);
+	if (result == RT_EOK) rt_thread_startup(&reg_thread);
 	
+  	result = rt_thread_init(&protect_thread,
+	                        "Protect",
+	                        rt_thread_protect_entry,
+	                        RT_NULL,
+	                        (rt_uint8_t*)protect_stack,
+	                        sizeof(protect_stack),
+	                        PRIO_PROTECT,
+	                        5);
+	if (result == RT_EOK) rt_thread_startup(&protect_thread);
+  
 	IIC_Init();
 	IIC_Write(DS3231_ADDRESS, DS3231_CON_STA,0x80);
 	do
@@ -207,9 +144,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(clock_stack),
 	                        PRIO_CLOCK,
 	                        2);
-
-	if (result == RT_EOK)
-	  rt_thread_startup(&clock_thread);
+	if (result == RT_EOK) rt_thread_startup(&clock_thread);
 	
 	result = rt_thread_init(&ir_thread,
 	                        "IR",
@@ -219,8 +154,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(ir_stack),
 	                        PRIO_IR,
 	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&ir_thread);
+	if (result == RT_EOK) rt_thread_startup(&ir_thread);
 	
 	result = rt_thread_init(&temp_thread,
 	                        "Temp",
@@ -230,8 +164,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(temp_stack),
 	                        PRIO_TEMP,
 	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&temp_thread);
+//	if (result == RT_EOK) rt_thread_startup(&temp_thread);
 	
 	result = rt_thread_init(&date_thread,
 	                        "Date",
@@ -241,8 +174,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(date_stack),
 	                        PRIO_DATE,
 	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&date_thread);
+	if (result == RT_EOK) rt_thread_startup(&date_thread);
 	
 	result = rt_thread_init(&pomodoro_thread,
 	                        "Pomodoro",
@@ -252,8 +184,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(pomodoro_stack),
 	                        PRIO_POMODORO,
 	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&pomodoro_thread);
+	if (result == RT_EOK) rt_thread_startup(&pomodoro_thread);
 	
 	result = rt_thread_init(&counter_thread,
 	                        "Counter",
@@ -263,27 +194,22 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(counter_stack),
 	                        PRIO_COUNTER,
 	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&counter_thread);
+	if (result == RT_EOK) rt_thread_startup(&counter_thread);
 	
-  	result = rt_thread_init(&protect_thread,
-	                        "Protect",
-	                        rt_thread_protect_entry,
-	                        RT_NULL,
-	                        (rt_uint8_t*)protect_stack,
-	                        sizeof(protect_stack),
-	                        PRIO_PROTECT,
-	                        5);
-	if (result == RT_EOK)
-	  rt_thread_startup(&protect_thread);
+  rt_thread_delete(init_thread);
+  while (1);
+}
+
+int rt_task_object_init(void)
+{
+	en_event = rt_event_create("Enable",RT_IPC_FLAG_FIFO);
+    reg_event = rt_event_create("REGManag",RT_IPC_FLAG_FIFO);
+	ir_mq = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
+	return 0;
 }
 
 int rt_application_init(void)
 {
-	rt_thread_t init_thread;
-
-	en_event = rt_event_create("Enable",RT_IPC_FLAG_FIFO);
-	
 	init_thread = rt_thread_create("init",
 	                               rt_init_thread_entry, RT_NULL,
 	                               2048, RT_THREAD_PRIORITY_MAX-2, 1);

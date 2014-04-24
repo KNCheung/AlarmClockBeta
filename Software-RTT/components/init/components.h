@@ -29,6 +29,7 @@
 #include <rtthread.h>
 
 #ifdef RT_USING_FINSH
+#include <usart.h>
 #include <finsh.h>
 #include <shell.h>
 #endif

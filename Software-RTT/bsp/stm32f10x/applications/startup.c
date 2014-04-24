@@ -24,6 +24,7 @@
 /*@{*/
 
 extern int  rt_application_init(void);
+extern int  rt_task_object_init(void);
 
 #ifdef __CC_ARM
 extern int Image$$RW_IRAM1$$ZI$$Limit;
@@ -85,6 +86,9 @@ void rtthread_startup(void)
     /* init timer thread */
     rt_system_timer_thread_init();
 
+	/* init object */
+	rt_task_object_init();
+	
     /* init application */
     rt_application_init();
 

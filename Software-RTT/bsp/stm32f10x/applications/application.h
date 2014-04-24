@@ -21,7 +21,7 @@
 #define POMODORO_REST_TIME 		0x0003
 
 //Define REG Screen
-#define REG_SCREEN_NUMBER 	10
+#define REG_SCREEN_NUMBER 	32
 #define REG_PROTECT       0
 #define REG_TEMP_CLOCK		1
 #define REG_DATE 			2
@@ -29,6 +29,7 @@
 #define REG_POMODORO		4
 #define REG_COUNTER			5
 #define REG_CLOCK 			6
+#define REG_NOTHING     31
 
 #define REG_PROTECT_MSK 0x00000001
 #define REG_TEMP_CLOCK_MSK	0x00000002
@@ -37,6 +38,7 @@
 #define REG_POMODORO_MSK	0x00000010
 #define REG_COUNTER_MSK		0x00000020
 #define REG_CLOCK_MSK		0x00000040
+#define REG_NOTHING_MSK     0x80000000
 
 //Define Macro
 #define WAIT_FOR_RELEASE while(rt_event_recv(en_event,EVENT_PRESS,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/8,&e)==RT_EOK)

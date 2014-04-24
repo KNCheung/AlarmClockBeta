@@ -13,7 +13,8 @@ void rt_thread_date_entry(void* parameter)
   rt_uint32_t e;
   uint8_t m,d;
   IIC_Init();
-  while(1){
+  while(1)
+  {
     rt_event_recv(en_event,EVENT_DATE,RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e);
 
     m = IIC_Read(DS3231_ADDRESS, DS3231_MONTH);
