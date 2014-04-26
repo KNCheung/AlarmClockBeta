@@ -15,7 +15,7 @@ void rt_thread_protect_entry(void* parameter)
   voltage = GetVoltage();
   reg_output[REG_PROTECT]=REG_Convert(0x63,REG_HexToReg(voltage%10),REG_HexToReg(voltage/10%10),REG_HexToReg(voltage/100%10),0,1);
   rt_event_send(reg_event,REG_PROTECT_MSK);
-  rt_thread_delay(RT_TICK_PER_SECOND*1);
+  rt_thread_delay_hmsm(0,0,1,0);
   rt_event_recv(reg_event,REG_PROTECT_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   e = 0;
   while (1)
@@ -35,9 +35,9 @@ void rt_thread_protect_entry(void* parameter)
         rt_event_send(reg_event,REG_PROTECT_MSK);
         reg_output[REG_PROTECT]=REG_Convert(0x63,REG_HexToReg(voltage%10),REG_HexToReg(voltage/10%10),REG_HexToReg(voltage/100%10),0,1);
         voltage = GetVoltage();
-        rt_thread_delay(RT_TICK_PER_SECOND*2/3);
+        rt_thread_delay_hmsm(0,0,0,667);
         rt_event_recv(reg_event,REG_PROTECT_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
-        rt_thread_delay(RT_TICK_PER_SECOND/3);
+        rt_thread_delay_hmsm(0,0,0,333);
       }
     }
    	rt_event_recv(en_event,EVENT_GET_VOLTAGE,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*60,&e);

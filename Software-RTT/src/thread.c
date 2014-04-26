@@ -461,6 +461,12 @@ rt_err_t rt_thread_delay(rt_tick_t tick)
 }
 RTM_EXPORT(rt_thread_delay);
 
+rt_err_t rt_thread_delay_hmsm(rt_uint16_t hour, rt_uint16_t minute,rt_uint16_t second,rt_uint16_t milli)
+{
+	return rt_thread_sleep(RT_TICK_PER_SECOND*(hour*3600+minute*60+second)+(milli*RT_TICK_PER_SECOND)/1000);
+}
+RTM_EXPORT(rt_thread_delay_hmsm);
+
 /**
  * This function will control thread behaviors according to control command.
  *

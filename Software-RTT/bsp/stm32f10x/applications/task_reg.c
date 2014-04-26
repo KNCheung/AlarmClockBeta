@@ -17,7 +17,7 @@ void rt_thread_reg_entry(void* parameter)
   REG_Init();
   REG_On();
   for (i=0;i<REG_SCREEN_NUMBER;i++)
-    reg_output[i] = 0XBFBFBFBF;
+    reg_output[i] = 0X8EC0C0C7;
   rt_event_send(en_event,EVENT_REG);
   rt_event_send(reg_event,REG_NOTHING_MSK);
   while (1)
@@ -46,7 +46,7 @@ void ToggleREG(void)
     	rt_kprintf("\n  REG is Turned Off\n");
   	}else{
     	rt_event_send(en_event,EVENT_REG);
-    	rt_thread_delay(20);
+    	rt_thread_delay_hmsm(0,0,0,20);
     	REG_On();
     	rt_kprintf("\n  REG is Turned On\n");
   	}

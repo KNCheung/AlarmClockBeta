@@ -43,14 +43,14 @@ uint16_t GetVoltage(void)
   ADC_Running = 1;
   ADC_Enable();
   ADC_ResetCalibration(ADC1);
-  rt_thread_delay(5);
+  rt_thread_delay_hmsm(0,0,0,5);
   ADC_StartCalibration(ADC1);
-  rt_thread_delay(5);
+  rt_thread_delay_hmsm(0,0,0,5);
   
   ADC_SoftwareStartConvCmd(ADC1,ENABLE);
   for (i=0;i<8;i++)
   {
-    rt_thread_delay(5);
+    rt_thread_delay_hmsm(0,0,0,5);
     tmp[i]=ADC_GetConversionValue(ADC1);
   }
   for (i=0;i<7;i++)

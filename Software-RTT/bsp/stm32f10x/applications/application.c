@@ -122,14 +122,14 @@ void rt_init_thread_entry(void* parameter)
 	do
 	{
 	  Setting_Read();
-	  rt_thread_delay(RT_TICK_PER_SECOND/100);
+	  rt_thread_delay_hmsm(0,0,0,10);
 	}while(Setting[0]!=42);
 	
 	clock_s = IIC_Read(DS3231_ADDRESS, DS3231_SECOND);
 	t=clock_s;
 	while (t==clock_s)
 	{
-	  rt_thread_delay(10);
+	  rt_thread_delay_hmsm(0,0,0,10);
 	  clock_s = IIC_Read(DS3231_ADDRESS, DS3231_SECOND);
 	}
 	update_second_timer = rt_timer_create("Second",update_second,RT_NULL,RT_TICK_PER_SECOND,RT_TIMER_FLAG_HARD_TIMER|RT_TIMER_FLAG_PERIODIC|RT_TIMER_FLAG_ACTIVATED);
@@ -224,7 +224,7 @@ void reboot(void)
 {
 	rt_kprintf("=====REBOOTED=====");
 	REG_Off();
-	rt_thread_delay(10);  
+	rt_thread_delay_hmsm(0,0,0,10);  
 	NVIC_SystemReset();
 	return;
 }
@@ -256,10 +256,10 @@ void Setting_Write(void)
 	while (1)
 	{
 	IIC_WriteSeq(AT24C32_ADDRESS,SETTING_BASE,Setting,SETTING_LENGTH);
-	rt_thread_delay(10);
+	rt_thread_delay_hmsm(0,0,0,10);
 	IIC_ReadSeq(AT24C32_ADDRESS,SETTING_BASE+1, &t,1);
 	if (t!=Setting[1])
-		rt_thread_delay(10);
+		rt_thread_delay_hmsm(0,0,0,10);
 	else
 		break;
 	}

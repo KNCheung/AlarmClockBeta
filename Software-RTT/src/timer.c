@@ -632,7 +632,7 @@ static void rt_thread_timer_entry(void *parameter)
             {
                 /* get the delta timeout tick */
                 next_timeout = next_timeout - current_tick;
-                rt_thread_delay(next_timeout);
+                rt_thread_delay_hmsm(next_timeout);
             }
         }
 
