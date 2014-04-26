@@ -164,7 +164,7 @@ void rt_init_thread_entry(void* parameter)
 	                        sizeof(temp_stack),
 	                        PRIO_TEMP,
 	                        5);
-//	if (result == RT_EOK) rt_thread_startup(&temp_thread);
+	if (result == RT_EOK) rt_thread_startup(&temp_thread);
 	
 	result = rt_thread_init(&date_thread,
 	                        "Date",
@@ -241,9 +241,9 @@ void Print_Setting(void)
 	uint8_t i;
 	for (i=0;i<SETTING_LENGTH;i++)
 	{
-	rt_kprintf("\t%d ",Setting[i]);
-	if (i%8==0)
-		rt_kprintf("\n");
+		if (i%8==0)
+			rt_kprintf("\n");
+		rt_kprintf("\t%d ",Setting[i]);
 	}
 	rt_kprintf("\n");
 	return;

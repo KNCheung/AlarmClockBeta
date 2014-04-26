@@ -60,7 +60,7 @@ void rt_thread_ir_entry(void* parameter)
             // CH-
             case 0xA2: ToggleREG(); break;
             // CH
-            case 0x62: break;
+            case 0x62: rt_event_send(en_event,EVENT_GET_VOLTAGE); break;
             // CH+
             case 0xE2: rt_event_send(en_event,EVENT_TEMP_CLOCK); break;
             // PREV

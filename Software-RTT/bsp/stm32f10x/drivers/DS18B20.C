@@ -1,57 +1,51 @@
 #include "DS18B20.h"
 #include <stm32f10x.h>
 #include <rtthread.h>
-#include <TIM.h>
 
 uint8_t i,k;
 extern uint16_t TickCnt;
 
-#define OneWire_Pin GPIO_Pin_4
-#define OneWire_Port GPIOA
-#define OneWire_Port_Clock RCC_APB2Periph_GPIOA
+#define OneWire_Pin 				GPIO_Pin_4
+#define OneWire_Port 				GPIOA
+#define OneWire_Port_Clock 			RCC_APB2Periph_GPIOA
+
+#define OneWire_TIMER	TIM4
+#define OneWire_TIMER_CLOCK			RCC_APB1Periph_TIM4
 
 uint8_t OneWire_ReadChar(void);
 BitAction OneWire_ReadBit(void);
 void OneWire_WriteChar(uint8_t);
 void OneWire_WriteBit(uint8_t);
 uint8_t OneWire_Reset(void);
-//void Delay_us(uint16_t);
-
-GPIO_InitTypeDef Tx,Rx;
 
 void OneWire_Init(void)
 {
+	TIM_TimeBaseInitTypeDef usrTIM;
+	GPIO_InitTypeDef usrGPIO;
+	
+	RCC_APB1PeriphClockCmd(OneWire_TIMER_CLOCK,ENABLE);
 	RCC_APB2PeriphClockCmd(OneWire_Port_Clock,ENABLE);
 	
-	Rx.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	Rx.GPIO_Pin = OneWire_Pin;
-	Rx.GPIO_Speed = GPIO_Speed_50MHz;
-	
-	Tx.GPIO_Mode = GPIO_Mode_Out_OD;
-	Tx.GPIO_Pin = OneWire_Pin;
-	Tx.GPIO_Speed = GPIO_Speed_50MHz;
+	usrGPIO.GPIO_Mode	= GPIO_Mode_Out_OD;
+	usrGPIO.GPIO_Pin	= OneWire_Pin;
+	usrGPIO.GPIO_Speed	= GPIO_Speed_50MHz;
+	GPIO_Init(OneWire_Port,&usrGPIO);
   
-  cfgTIM();
-}
-
-void OneWire_Rx(void)
-{
-	GPIO_Init(OneWire_Port,&Rx);
-}
-
-void OneWire_Tx(void)
-{
-	GPIO_Init(OneWire_Port,&Tx);
+	usrTIM.TIM_ClockDivision	= TIM_CKD_DIV1;
+	usrTIM.TIM_CounterMode		= TIM_CounterMode_Up;
+	usrTIM.TIM_Period			= 0xFFFF;
+	usrTIM.TIM_Prescaler		= 71;
+	TIM_TimeBaseInit(TIM4,&usrTIM);
+	TIM_Cmd(TIM4,ENABLE);
 }
 
 uint8_t OneWire_Reset(void)
 {
-	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);				//Pull Up the Wire
-	Delay_us(1);																	//Wait, needless
+	Delay_us(1);										//Wait, needless
 	GPIO_ResetBits(OneWire_Port,OneWire_Pin);			//Pull Down the Wire to send out the reset signal
-	Delay_us(480);																//Wait for 480us
-	OneWire_Rx();																	//Release the Wire
+	Delay_us(480);										//Wait for 480us
+	GPIO_SetBits(OneWire_Port,OneWire_Pin);				//Release the Wire
 	Delay_us(60);
 	k=0;
 	for (i=0;i<7;i++)
@@ -59,8 +53,6 @@ uint8_t OneWire_Reset(void)
 		k+=GPIO_ReadInputDataBit(OneWire_Port,OneWire_Pin);
 		Delay_us(10);
 	}
-	// while (GPIO_ReadInputDataBit(OneWire_Port,OneWire_Pin)==Bit_RESET);
-	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
 	if (k<=3)
 	{
@@ -74,16 +66,13 @@ BitAction OneWire_ReadBit(void)
 {
 	BitAction x;
 	
-	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
 	GPIO_ResetBits(OneWire_Port,OneWire_Pin);
 	Delay_us(10);
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
-	OneWire_Rx();
 	Delay_us(5);
 	x=(GPIO_ReadInputDataBit(OneWire_Port,OneWire_Pin))?Bit_SET:Bit_RESET;
 	Delay_us(45);
-	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
 	
 	return x;
@@ -91,7 +80,6 @@ BitAction OneWire_ReadBit(void)
 
 void OneWire_WriteBit(BitAction x)
 {
-	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
 	Delay_us(1);
 	GPIO_ResetBits(OneWire_Port,OneWire_Pin);
@@ -133,7 +121,7 @@ void DS18B20_StartConvTemp(void)
 
 float DS18B20_ReadTemp(void)
 {
-  uint8_t M,L;
+    uint8_t M,L;
 	int8_t tmp_i;
 	float ans;
 	OneWire_Reset();
@@ -145,19 +133,11 @@ float DS18B20_ReadTemp(void)
 	ans=tmp_i+(L%16)/16.0f;
 	return ans;
 }
-/*
+
 void Delay_us(uint16_t n)
 {
-  volatile uint32_t t;
-  t = SysTick->VAL;
-  t = (n*(SystemCoreClock/1000000)+t)%(SysTick->LOAD);
-  if (t<(SysTick->VAL))
-  {
-    while (t<(SysTick->VAL));
-    while (t>=(SysTick->VAL));
-  }
-  else 
-    while (t>=SysTick->VAL);
+  uint16_t t;
+  t=TIM_GetCounter(TIM4);
+  while ((uint16_t)(TIM_GetCounter(TIM4)-t)<n);
   return;
 }
-*/

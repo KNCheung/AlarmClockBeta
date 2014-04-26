@@ -509,11 +509,6 @@
               <FileType>1</FileType>
               <FilePath>.\drivers\DS18B20.C</FilePath>
             </File>
-            <File>
-              <FileName>TIM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\drivers\TIM.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
