@@ -69,9 +69,9 @@ static struct rt_thread protect_thread;
 
 	rt_thread_t init_thread;
 
-rt_mq_t ir_mq = RT_NULL;
-rt_event_t en_event = RT_NULL;
-rt_event_t reg_event = RT_NULL;
+rt_mq_t ir_mq 			= RT_NULL;
+rt_event_t en_event		= RT_NULL;
+rt_event_t reg_event 	= RT_NULL;
 
 extern uint8_t clock_s;
 

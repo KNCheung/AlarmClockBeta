@@ -13,6 +13,7 @@ uint64_t start_tim, curr_tim, interval;
 void rt_thread_counter_entry(void* parameter)
 {
 	rt_uint32_t e;
+	uint32_t t;
 	while (1)
 	{
 		rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_CLEAR | RT_EVENT_FLAG_OR, RT_WAITING_FOREVER, &e);
@@ -37,14 +38,15 @@ void rt_thread_counter_entry(void* parameter)
 				                                      1,0);
 			}
 		}while(rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND*1, &e));
+	t = reg_output[REG_COUNTER];
     while (1)
     {
       if (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND/2, &e)==RT_EOK)
         break;
-      REG_Off();
+      reg_output[REG_COUNTER] = 0xFFFFFFFF;
       if (rt_event_recv(en_event, EVENT_COUNTER, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_TICK_PER_SECOND/2, &e)==RT_EOK)
         break;
-      REG_On();
+      reg_output[REG_COUNTER] = t;
     }
     REG_On();
 		rt_event_recv(reg_event, REG_COUNTER_MSK, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, 0, &e);
