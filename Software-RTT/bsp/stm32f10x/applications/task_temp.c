@@ -11,6 +11,7 @@ extern rt_event_t en_event,reg_event;
 void rt_thread_temp_entry(void* parameter)
 {
   rt_uint32_t e;
+  rt_err_t err;
   int16_t temp;
   OneWire_Init();
   rt_enter_critical();
@@ -19,9 +20,9 @@ void rt_thread_temp_entry(void* parameter)
   rt_thread_delay_hmsm(0,0,0,500);
   while (1)
   {
-    rt_event_recv(en_event,EVENT_TEMP,RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*180,&e);
+    err = rt_event_recv(en_event,EVENT_TEMP,RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*180,&e);
 	  
-	if (e & EVENT_TEMP)
+	if (err == RT_EOK)
 	{
 		rt_event_send(reg_event,REG_TEMP_MSK);
 		reg_output[REG_TEMP]=0xBFBFBFBF;
@@ -31,7 +32,7 @@ void rt_thread_temp_entry(void* parameter)
     DS18B20_StartConvTemp();
     rt_exit_critical();
     
-	if (e & EVENT_TEMP)
+	if (err == RT_EOK)
 	{
 		rt_thread_delay_hmsm(0,0,0,750);
     

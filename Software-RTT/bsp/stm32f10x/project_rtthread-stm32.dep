@@ -265,7 +265,7 @@ I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x53536476)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h)(0x53536476)
 I (Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x53536475)
 I (drivers\REG.h)(0x53536476)
-F (.\applications\task_temp.c)(0x535C801B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I. -I..\..\components\CMSIS\Include -I..\..\components\drivers\include -I..\..\components\finsh -I..\..\components\init -I..\..\include -I..\..\libcpu\arm\common -I..\..\libcpu\arm\cortex-m3 -ILibraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -ILibraries\STM32F10x_StdPeriph_Driver\inc -Iapplications -Idrivers-I D:\Engineering\Keil\ARM\RV31\INC-I D:\Engineering\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Engineering\Keil\ARM\PACK\Keil\STM32F1xx_DFP\1.0.2\Device\Include-DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\build\task_temp.o --omf_browse .\build\task_temp.crf --depend .\build\task_temp.d)
+F (.\applications\task_temp.c)(0x535C8FE2)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I. -I..\..\components\CMSIS\Include -I..\..\components\drivers\include -I..\..\components\finsh -I..\..\components\init -I..\..\include -I..\..\libcpu\arm\common -I..\..\libcpu\arm\cortex-m3 -ILibraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -ILibraries\STM32F10x_StdPeriph_Driver\inc -Iapplications -Idrivers-I D:\Engineering\Keil\ARM\RV31\INC-I D:\Engineering\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I D:\Engineering\Keil\ARM\PACK\Keil\STM32F1xx_DFP\1.0.2\Device\Include-DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o .\build\task_temp.o --omf_browse .\build\task_temp.crf --depend .\build\task_temp.d)
 I (..\..\include\rtthread.h)(0x535BF61D)
 I (.\rtconfig.h)(0x53536476)
 I (..\..\include\rtdebug.h)(0x53536476)
@@ -1927,4 +1927,4 @@ I (D:\Engineering\Keil\ARM\ARMCC\include\ctype.h)(0x52FDD27E)
 I (D:\Engineering\Keil\ARM\ARMCC\include\stdlib.h)(0x52FDD27E)
 I (D:\Engineering\Keil\ARM\ARMCC\include\string.h)(0x52FDD27E)
 I (..\..\components\finsh\shell.h)(0x53536476)
-F (..\..\..\README.md)(0x535BEA06)()
+F (..\..\..\README.md)(0x535C897D)()
