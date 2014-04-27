@@ -35,6 +35,7 @@
 #include <task_clock.h>
 #include <task_counter.h>
 #include <task_protect.h>
+#include <task_cpuusage.h>
 
 #include <IIC.h>
 #include <REG.h>
@@ -88,6 +89,8 @@ void rt_init_thread_entry(void* parameter)
 	rt_err_t result;
 	uint8_t t;
 
+	rt_thread_idle_sethook(idle_hook);
+	
 #ifdef RT_USING_COMPONENTS_INIT
 	/* initialization RT-Thread Components */
 	rt_components_init();
@@ -232,7 +235,6 @@ FINSH_FUNCTION_EXPORT(reboot,Reboot the MCU)
 
 void fnDebug(uint8_t a,uint8_t b,uint8_t c)
 {
-  rt_kprintf("%lx\n",TIM_GetCounter(TIM3));
 }
 FINSH_FUNCTION_EXPORT_ALIAS(fnDebug,debug,Debug Function)
 

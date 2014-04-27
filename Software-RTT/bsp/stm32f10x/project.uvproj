@@ -454,6 +454,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\task_protect.c</FilePath>
             </File>
+            <File>
+              <FileName>task_cpuusage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\task_cpuusage.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

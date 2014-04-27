@@ -58,6 +58,7 @@ void rt_thread_clock_entry(void* parameter)
     {
       reg_output[REG_TEMP_CLOCK]=reg_output[REG_CLOCK];
       rt_event_send(reg_event,REG_TEMP_CLOCK_MSK);
+	  rt_thread_delay_hmsm(0,0,1,0);
       WAIT_FOR_RELEASE;
       rt_event_recv(reg_event,REG_TEMP_CLOCK_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
     }

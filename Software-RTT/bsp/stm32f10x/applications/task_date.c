@@ -22,6 +22,7 @@ void rt_thread_date_entry(void* parameter)
     reg_output[REG_DATE]=REG_Convert(REG_HexToReg(d%16),REG_HexToReg(d/16),REG_HexToReg(m%16),REG_HexToReg((m/16)&0x7),1,1);
     
     rt_event_send(reg_event,REG_DATE_MSK);
+	rt_thread_delay_hmsm(0,0,1,0);
     WAIT_FOR_RELEASE;
     rt_event_recv(reg_event,REG_DATE_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   }

@@ -32,7 +32,7 @@ void rt_thread_reg_entry(void* parameter)
     }
     REG_Set(reg_output[i]);
     REG_Update();
-    rt_thread_delay(2);
+	rt_thread_delay_hmsm(0,0,0,5);
   }
 }
 

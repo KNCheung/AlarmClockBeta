@@ -165,7 +165,7 @@ void rt_thread_idle_excute(void)
 #endif
     }
 }
-extern char ADC_Running;
+
 static void rt_thread_idle_entry(void *parameter)
 {
     while (1)
@@ -174,8 +174,6 @@ static void rt_thread_idle_entry(void *parameter)
         if (rt_thread_idle_hook != RT_NULL)
             rt_thread_idle_hook();
         #endif
-        if (!ADC_Running)
-          __asm("WFI");
         rt_thread_idle_excute();
     }
 }
