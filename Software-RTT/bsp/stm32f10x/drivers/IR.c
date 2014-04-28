@@ -26,7 +26,7 @@ void IR_Init(void)
   usrTIMBase.TIM_ClockDivision = TIM_CKD_DIV1 ;
   usrTIMBase.TIM_CounterMode = TIM_CounterMode_Up;
   usrTIMBase.TIM_Period = 59999;
-  usrTIMBase.TIM_Prescaler = 719;
+  usrTIMBase.TIM_Prescaler = (SystemCoreClock/100000-1);
   TIM_TimeBaseInit(TIM3,&usrTIMBase);
   
   usrTIMIC.TIM_Channel = TIM_Channel_3;

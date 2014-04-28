@@ -90,7 +90,7 @@ void rt_thread_pomodoro_entry(void* parameter)
         default: 
           break;
       }
-    }while(rt_event_recv(en_event,EVENT_POMODORO,RT_EVENT_FLAG_AND,500,&e) != RT_EOK);
+    }while(rt_event_recv(en_event,EVENT_POMODORO,RT_EVENT_FLAG_AND,RT_TICK_PER_SECOND/2,&e) != RT_EOK);
     rt_event_recv(en_event, EVENT_POMODORO|EVENT_POMODORO_BREAK|EVENT_POMODORO_REST,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
     rt_event_recv(reg_event, REG_POMODORO_MSK, RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0 ,&e);
   }

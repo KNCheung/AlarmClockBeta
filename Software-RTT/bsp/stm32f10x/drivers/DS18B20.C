@@ -34,7 +34,7 @@ void OneWire_Init(void)
 	usrTIM.TIM_ClockDivision	= TIM_CKD_DIV1;
 	usrTIM.TIM_CounterMode		= TIM_CounterMode_Up;
 	usrTIM.TIM_Period			= 0xFFFF;
-	usrTIM.TIM_Prescaler		= 71;
+	usrTIM.TIM_Prescaler		= (SystemCoreClock/1000000-1);
 	TIM_TimeBaseInit(TIM4,&usrTIM);
 	TIM_Cmd(TIM4,ENABLE);
 }
