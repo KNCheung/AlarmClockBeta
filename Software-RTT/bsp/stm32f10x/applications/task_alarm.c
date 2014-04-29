@@ -6,11 +6,12 @@
 #include <REG.h>
 
 extern rt_mq_t key_mq;
-extern rt_event_t reg_event;
+extern rt_event_t reg_event,en_event;
 extern uint32_t reg_output[REG_SCREEN_NUMBER]; 
+extern uint8_t clock_h,clock_m,clock_s;
 
 void rt_thread_alarm_entry (void *parameter);
-void fnSetAlarmClock(uint8_t hour,uint8_t minute,uint8_t second);
+ErrorStatus fnSetAlarmClock(uint8_t hour,uint8_t minute,uint8_t second);
 void fnAlarm(void);
 
 void rt_thread_alarm_entry (void *parameter)
@@ -80,16 +81,28 @@ void rt_thread_alarm_entry (void *parameter)
 			rt_event_recv(reg_event,REG_ALARM_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
 			continue;
 		}else
-			fnSetAlarmClock(t/100,t%100,0);
+		{
+			if (buf == 0x0B)
+			{
+				if (fnSetAlarmClock(t/100,t%100,0)==ERROR)
+					rt_event_recv(reg_event,REG_ALARM_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+			}
+			else 
+			{
+				if (fnSetAlarmClock((clock_h+((t/100<clock_m)?1:0))%24,t/100,t%100)==ERROR)
+					rt_event_recv(reg_event,REG_ALARM_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
+			}
+		}
 	}
 }
 
-void fnSetAlarmClock(uint8_t h,uint8_t m,uint8_t s)
+ErrorStatus fnSetAlarmClock(uint8_t h,uint8_t m,uint8_t s)
 {
 	uint8_t t;
+	
+	if ((h>=24)||(m>=60)||(s>=60))
+		return ERROR;
 	rt_kprintf("\n===Enter Alarm Clock Mode===\n");
-	rt_event_send(reg_event,REG_ALARM_MSK);
-	reg_output[REG_ALARM] = 0x80808080;
 	
 	/* Set Alarm Time */
 	IIC_Write(DS3231_ADDRESS,DS3231_A1_S,(s%10)|((s/10)<<4));
@@ -101,19 +114,54 @@ void fnSetAlarmClock(uint8_t h,uint8_t m,uint8_t s)
 	t &= 0xFC;
 	IIC_Write(DS3231_ADDRESS,DS3231_CON_STA,t);
 	
-	rt_thread_delay_hmsm(0,0,0,600);
-	reg_output[REG_ALARM] = 0xFFFFFFFF;
-	rt_thread_delay_hmsm(0,0,0,400);
+	rt_event_send(en_event,EVENT_TEMP_CLOCK);
+	rt_thread_delay_hmsm(0,0,1,0);
 	
-	lp();
+	rt_event_send(reg_event,REG_ALARM_MSK);
+	reg_output[REG_ALARM] = REG_Convert(REG_HexToReg(m%10),REG_HexToReg(m/10),REG_HexToReg(h%10),REG_HexToReg(h/10),1,0);
+	rt_thread_delay_hmsm(0,0,1,0);
+	
+	reg_output[REG_ALARM] = 0xFFFFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFFFE;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFEBF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFEBFF7;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFEBFF7FF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xBFF7FFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xF7FFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	
+	StandBy();
+	return SUCCESS;
 }
 
 void fnAlarm(void)
 {
 	rt_uint32_t e;
-	reg_output[REG_ALARM] = 0xF7F7F7F7;
 	rt_event_send(reg_event,REG_ALARM_MSK);
-	rt_thread_delay_hmsm(0,0,3,0);
+	reg_output[REG_ALARM] = 0xFFFFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xF7FFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xBFF7FFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFEBFF7FF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFEBFF7;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFEBF;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFFFE;
+	rt_thread_delay_hmsm(0,0,0,62);
+	reg_output[REG_ALARM] = 0xFFFFFFFF;
+	rt_thread_delay_hmsm(0,0,0,62);
 	rt_event_recv(reg_event,REG_ALARM_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
 	return;
 }

@@ -35,14 +35,20 @@ void REG_Update(void)
 
 void REG_Init(void)
 {
-  GPIO_InitTypeDef usrGPIO;
-  
-  RCC_APB2PeriphClockCmd(REG_RCC_CLK,ENABLE);
-  usrGPIO.GPIO_Mode = GPIO_Mode_Out_PP;
-  usrGPIO.GPIO_Pin = REG_SER|REG_SECLK|REG_RCLK|REG_nOE;
-  usrGPIO.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(REG_PORT,&usrGPIO);
-  REG_Off();
+	GPIO_InitTypeDef usrGPIO;
+
+	RCC_APB2PeriphClockCmd(REG_RCC_CLK,ENABLE);
+	usrGPIO.GPIO_Mode = GPIO_Mode_Out_PP;
+	usrGPIO.GPIO_Pin = REG_SER|REG_SECLK|REG_RCLK;
+	usrGPIO.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(REG_PORT,&usrGPIO);
+	
+	usrGPIO.GPIO_Mode = GPIO_Mode_Out_OD;
+	usrGPIO.GPIO_Pin = REG_nOE;
+	usrGPIO.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(REG_PORT,&usrGPIO);
+
+	REG_Off();
 }
 
 uint32_t REG_Convert(rt_uint8_t a,rt_uint8_t b,rt_uint8_t c,rt_uint8_t d,rt_uint8_t comment,rt_uint8_t dot)

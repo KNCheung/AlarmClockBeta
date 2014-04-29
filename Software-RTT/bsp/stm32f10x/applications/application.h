@@ -25,8 +25,8 @@
 //Define REG Screen
 #define REG_SCREEN_NUMBER 	32
 #define REG_PROTECT			0
-#define REG_ALARM			1
-#define REG_TEMP_CLOCK		2
+#define REG_TEMP_CLOCK		1
+#define REG_ALARM			2
 #define REG_DATE 			3
 #define REG_TEMP 			4
 #define REG_POMODORO		5
@@ -35,8 +35,8 @@
 #define REG_NOTHING			31
 
 #define REG_PROTECT_MSK 	0x00000001
-#define REG_ALARM_MSK		0x00000002
-#define REG_TEMP_CLOCK_MSK	0x00000004
+#define REG_TEMP_CLOCK_MSK	0x00000002
+#define REG_ALARM_MSK		0x00000004
 #define REG_DATE_MSK		0x00000008
 #define REG_TEMP_MSK		0x00000010
 #define REG_POMODORO_MSK	0x00000020
@@ -67,7 +67,7 @@ void Setting_Write(void);
 void Setting_Read(void);
 void pomodoro_set(uint8_t a,uint8_t b,uint8_t c);
 void time(void);
-void lp(void);
+void StandBy(void);
 
 
 #endif 

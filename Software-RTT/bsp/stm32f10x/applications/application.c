@@ -312,7 +312,7 @@ void time(void)
 }
 FINSH_FUNCTION_EXPORT(time,Read DS3231)
 
-void lp(void)
+void StandBy(void)
 {
 	REG_Off();
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE); 
@@ -323,7 +323,7 @@ void lp(void)
 	PWR_EnterSTANDBYMode();
 	return;
 }
-FINSH_FUNCTION_EXPORT(lp , Low Power Mode)
+FINSH_FUNCTION_EXPORT(StandBy , Low Power Mode)
 
 void Set_Time(uint8_t Y,uint8_t M,uint8_t D,uint8_t w, uint8_t h,uint8_t m, uint8_t s)
 {
