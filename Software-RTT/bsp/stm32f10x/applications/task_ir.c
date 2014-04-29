@@ -6,7 +6,7 @@
 #include <REG.h>
 #include <task_reg.h>
 
-extern rt_mq_t ir_mq;
+extern rt_mq_t ir_mq,key_mq;
 extern rt_event_t en_event;
 
 void rt_thread_ir_entry(void* parameter)
@@ -15,6 +15,7 @@ void rt_thread_ir_entry(void* parameter)
   uint8_t state = 0;
   uint32_t IRCode;
   uint8_t RFlag;
+  uint8_t t;
   IR_Init();
   IR_Enable();
   while (1)
@@ -56,7 +57,7 @@ void rt_thread_ir_entry(void* parameter)
           state=0;
           RFlag =1 ;
           switch ((uint8_t)((IRCode>>8)%256))
-          { //DECODE
+          { //DECODER
             // CH-
             case 0xA2: ToggleREG(); break;
             // CH
@@ -76,29 +77,29 @@ void rt_thread_ir_entry(void* parameter)
             // PLAY/PAUSE
             case 0x90: rt_event_send(en_event,EVENT_POMODORO_REST);break;
             // 0
-            case 0x68: break;
+            case 0x68: t=0; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 100+
-            case 0x98: break;
+            case 0x98: t=0x0A; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 200+
-            case 0xB0: break;
+            case 0xB0: t=0x0B; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 1
-            case 0x30: break;
+            case 0x30: t=1; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 2
-            case 0x18: break;
+            case 0x18: t=2; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 3
-            case 0x7A: break;
+            case 0x7A: t=3; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 4
-            case 0x10: break;
+            case 0x10: t=4; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 5
-            case 0x38: break;
+            case 0x38: t=5; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 6
-            case 0x5A: break;
+            case 0x5A: t=6; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 7
-            case 0x42: break;
+            case 0x42: t=7; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 8
-            case 0x4A: break;
+            case 0x4A: t=8; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // 9
-            case 0x52: break;
+            case 0x52: t=9; rt_mq_send(key_mq,&t,sizeof(uint8_t)); break;
             // ERROR
             default: rt_kprintf("INVALID CODE : %x\n",(uint8_t)((IRCode>>8)%256));break;
           }

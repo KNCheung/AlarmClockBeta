@@ -27,6 +27,7 @@
 *.out
 *.app
 
+
 build/
 Project Logs for Alarm/
 History/

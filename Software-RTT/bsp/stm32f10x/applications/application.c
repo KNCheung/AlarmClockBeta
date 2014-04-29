@@ -36,6 +36,7 @@
 #include <task_counter.h>
 #include <task_protect.h>
 #include <task_cpuusage.h>
+#include <task_alarm.h>
 
 #include <IIC.h>
 #include <REG.h>
@@ -43,34 +44,38 @@
 
 ALIGN(RT_ALIGN_SIZE)
 
-static rt_uint8_t reg_stack[256];
-static struct rt_thread reg_thread;
+rt_uint8_t reg_stack[256];
+struct rt_thread reg_thread;
 
-static rt_uint8_t clock_stack[256];
-static struct rt_thread clock_thread;
+rt_uint8_t clock_stack[256];
+struct rt_thread clock_thread;
 rt_timer_t update_clock_timer,update_second_timer;
 
-static rt_uint8_t ir_stack[256];
-static struct rt_thread ir_thread;
+rt_uint8_t ir_stack[256];
+struct rt_thread ir_thread;
 
-static rt_uint8_t temp_stack[256];
-static struct rt_thread temp_thread;
+rt_uint8_t temp_stack[256];
+struct rt_thread temp_thread;
 
-static rt_uint8_t date_stack[256];
-static struct rt_thread date_thread;
+rt_uint8_t date_stack[256];
+struct rt_thread date_thread;
 
-static rt_uint8_t pomodoro_stack[256];
-static struct rt_thread pomodoro_thread;
+rt_uint8_t pomodoro_stack[256];
+struct rt_thread pomodoro_thread;
 
-static rt_uint8_t counter_stack[256];
-static struct rt_thread counter_thread;
+rt_uint8_t counter_stack[256];
+struct rt_thread counter_thread;
 
-static rt_uint8_t protect_stack[256];
-static struct rt_thread protect_thread;
+rt_uint8_t protect_stack[256];
+struct rt_thread protect_thread;
+
+rt_uint8_t alarm_stack[256];
+struct rt_thread alarm_thread;
 
 	rt_thread_t init_thread;
 
 rt_mq_t ir_mq 			= RT_NULL;
+rt_mq_t key_mq			= RT_NULL;
 rt_event_t en_event		= RT_NULL;
 rt_event_t reg_event 	= RT_NULL;
 
@@ -139,6 +144,16 @@ void rt_init_thread_entry(void* parameter)
 	rt_timer_start(update_second_timer);
 	  
 
+	result = rt_thread_init(&alarm_thread,
+	                        "Alarm",
+	                        rt_thread_alarm_entry,
+	                        RT_NULL,
+	                        (rt_uint8_t*)alarm_stack,
+	                        sizeof(alarm_stack),
+	                        PRIO_ALARM,
+	                        2);
+	if (result == RT_EOK) rt_thread_startup(&alarm_thread);
+							
 	result = rt_thread_init(&clock_thread,
 	                        "Clock",
 	                        rt_thread_clock_entry,
@@ -198,7 +213,7 @@ void rt_init_thread_entry(void* parameter)
 	                        PRIO_COUNTER,
 	                        5);
 	if (result == RT_EOK) rt_thread_startup(&counter_thread);
-	
+							
   rt_thread_delete(init_thread);
   while (1);
 }
@@ -208,6 +223,7 @@ int rt_task_object_init(void)
 	en_event = rt_event_create("Enable",RT_IPC_FLAG_FIFO);
     reg_event = rt_event_create("REGManag",RT_IPC_FLAG_FIFO);
 	ir_mq = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
+	key_mq = rt_mq_create("KEY",sizeof(uint8_t),64,RT_IPC_FLAG_FIFO);
 	return 0;
 }
 
@@ -299,8 +315,11 @@ FINSH_FUNCTION_EXPORT(time,Read DS3231)
 void lp(void)
 {
 	REG_Off();
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE); 
 	NVIC_SystemLPConfig(NVIC_LP_SEVONPEND,ENABLE);
 	PWR_WakeUpPinCmd(ENABLE);
+	PWR_ClearFlag(PWR_FLAG_WU);
+	PWR_ClearFlag(PWR_FLAG_SB);
 	PWR_EnterSTANDBYMode();
 	return;
 }
@@ -318,7 +337,10 @@ void Set_Time(uint8_t Y,uint8_t M,uint8_t D,uint8_t w, uint8_t h,uint8_t m, uint
   time();
   return;
 }
-FINSH_FUNCTION_EXPORT(Set_Time , Set the time store in the DS3231)
+FINSH_FUNCTION_EXPORT(Set_Time , Set time(YY,MM,DD,w,hh,mm,ss))
 
 extern uint8_t voltage;
 FINSH_VAR_EXPORT(voltage, finsh_type_uchar, The Power Voltage)
+
+FINSH_FUNCTION_EXPORT_ALIAS(fnSetAlarmClock,alarm,Set Alarm Clock(hh,mm,ss))
+

@@ -5,9 +5,9 @@
 uint8_t i,k;
 extern uint16_t TickCnt;
 
-#define OneWire_Pin 				GPIO_Pin_4
-#define OneWire_Port 				GPIOA
-#define OneWire_Port_Clock 			RCC_APB2Periph_GPIOA
+#define OneWire_Pin 				GPIO_Pin_9
+#define OneWire_Port 				GPIOB
+#define OneWire_Port_Clock 			RCC_APB2Periph_GPIOB
 
 #define OneWire_TIMER	TIM4
 #define OneWire_TIMER_CLOCK			RCC_APB1Periph_TIM4

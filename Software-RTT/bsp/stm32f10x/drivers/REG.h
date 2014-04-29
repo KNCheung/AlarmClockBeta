@@ -13,8 +13,8 @@ rt_uint8_t REG_HexToReg(rt_uint8_t);
 #define REG_PORT GPIOA
 #define REG_RCC_CLK RCC_APB2Periph_GPIOA
 
-#define REG_SER GPIO_Pin_2
-#define REG_nOE GPIO_Pin_0
+#define REG_SER GPIO_Pin_4
+#define REG_nOE GPIO_Pin_2
 #define REG_RCLK GPIO_Pin_1
 #define REG_SECLK GPIO_Pin_3
 
