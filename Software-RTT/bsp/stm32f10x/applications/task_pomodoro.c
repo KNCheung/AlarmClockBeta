@@ -15,6 +15,9 @@ void rt_thread_pomodoro_entry(void* parameter)
   rt_uint32_t e;
   uint8_t cnt = 0;
   uint8_t state = 0;
+  Setting[POMODORO_TIME]=25;
+  Setting[POMODORO_BREAK_TIME]=5;
+  Setting[POMODORO_REST_TIME]=15;
   while (1)
   {
     rt_event_recv(en_event,EVENT_POMODORO,RT_EVENT_FLAG_AND | RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e);

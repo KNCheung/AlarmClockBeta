@@ -20,7 +20,7 @@
 #define POMODORO_TIME 			0x0001
 #define POMODORO_BREAK_TIME 	0x0002
 #define POMODORO_REST_TIME 		0x0003
-#define COUNTER_BASE			0x0004
+#define ALARM					0x0004
 
 //Define REG Screen
 #define REG_SCREEN_NUMBER 	32
@@ -61,7 +61,6 @@
 #include <stdint.h>
 
 void reboot(void);
-void fnDebug(uint8_t a,uint8_t b,uint8_t c);
 void Print_Setting(void);
 void Setting_Write(void);
 void Setting_Read(void);

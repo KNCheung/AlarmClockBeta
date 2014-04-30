@@ -28,7 +28,7 @@ void rt_thread_clock_entry(void* parameter)
 {
   uint32_t set;
   uint8_t h,m,s;
-  rt_uint32_t e,e1;
+  rt_uint32_t e;
   IIC_Init();
   update_clock_timer = rt_timer_create("Update", \
                                        update_timeout, \
@@ -40,8 +40,7 @@ void rt_thread_clock_entry(void* parameter)
   rt_event_send(en_event,EVENT_CLOCK);
   while (1)
   {
-    rt_event_recv(en_event,EVENT_CLOCK|EVENT_TEMP_CLOCK,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e);
-    rt_event_recv(en_event,EVENT_REG,RT_EVENT_FLAG_AND,RT_WAITING_FOREVER,&e1);
+    
     rt_enter_critical();
     h=IIC_Read(DS3231_ADDRESS, DS3231_HOUR);
     m=IIC_Read(DS3231_ADDRESS, DS3231_MINUTE);
@@ -54,7 +53,7 @@ void rt_thread_clock_entry(void* parameter)
     reg_output[REG_CLOCK]=REG_Convert(REG_HexToReg(m%16),REG_HexToReg(m>>4),REG_HexToReg(h%16),REG_HexToReg(h>>4),1,0);
     rt_timer_control(update_clock_timer,RT_TIMER_CTRL_SET_TIME,&set);
     rt_timer_start(update_clock_timer);
-    if (e&EVENT_TEMP_CLOCK)
+    if (RT_EOK==rt_event_recv(en_event,EVENT_TEMP_CLOCK,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,0,&e))
     {
       reg_output[REG_TEMP_CLOCK]=reg_output[REG_CLOCK];
       rt_event_send(reg_event,REG_TEMP_CLOCK_MSK);
@@ -62,6 +61,8 @@ void rt_thread_clock_entry(void* parameter)
       WAIT_FOR_RELEASE;
       rt_event_recv(reg_event,REG_TEMP_CLOCK_MSK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
     }
+	rt_event_recv(en_event,EVENT_CLOCK|EVENT_TEMP_CLOCK,RT_EVENT_FLAG_OR,RT_WAITING_FOREVER,&e);
+	rt_event_recv(en_event,EVENT_CLOCK,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
   }
 }
 

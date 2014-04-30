@@ -1,6 +1,6 @@
 # Alarm Clock #
 Just an alarm clock with assistant functions.
-Base on [STM32F103R8T6](http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1031/LN1565) and [RT-Thread](http://www.rt-thread.org/) 1.2.1
+Base on [STM32F103C8T6](http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1031/LN1565) and [RT-Thread](http://www.rt-thread.org/) 1.2.1
 
 ## To-do List ##
 - 使能RTC外设
@@ -9,6 +9,9 @@ Base on [STM32F103R8T6](http://www.st.com/web/catalog/mmc/FM141/SC1169/SS1031/LN
 - 保存当前工作状态至EEPROM
 - 给DS3231增加一个电容，减少冲击电流
 - 为番茄钟增加打开/关闭屏幕功能
+
+## 2014-04-30 ##
+- (tag:v1.8.0) 完成闹钟提醒功能
 
 ## 2014-04-29 ##
 - 完成闹钟相关外部电路（闹钟WK-UP事件、震动电机驱动电路）

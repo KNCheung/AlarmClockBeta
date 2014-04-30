@@ -20,7 +20,7 @@
  
 #include <board.h>
 #include <rtthread.h>
-
+#include <math.h>
 
 #ifdef  RT_USING_COMPONENTS_INIT
 #include <components.h>
@@ -125,13 +125,16 @@ void rt_init_thread_entry(void* parameter)
 	                        5);
 	if (result == RT_EOK) rt_thread_startup(&protect_thread);
   
+							
 	IIC_Init();
+							/*
 	IIC_Write(DS3231_ADDRESS, DS3231_CON_STA,0x80);
 	do
 	{
 	  Setting_Read();
 	  rt_thread_delay_hmsm(0,0,0,10);
 	}while(Setting[0]!=42);
+							*/
 	
 	clock_s = IIC_Read(DS3231_ADDRESS, DS3231_SECOND);
 	t=clock_s;
@@ -143,7 +146,6 @@ void rt_init_thread_entry(void* parameter)
 	update_second_timer = rt_timer_create("Second",update_second,RT_NULL,RT_TICK_PER_SECOND,RT_TIMER_FLAG_HARD_TIMER|RT_TIMER_FLAG_PERIODIC|RT_TIMER_FLAG_ACTIVATED);
 	rt_timer_start(update_second_timer);
 	  
-
 	result = rt_thread_init(&alarm_thread,
 	                        "Alarm",
 	                        rt_thread_alarm_entry,
@@ -249,8 +251,9 @@ void reboot(void)
 }
 FINSH_FUNCTION_EXPORT(reboot,Reboot the MCU)
 
-void fnDebug(uint8_t a,uint8_t b,uint8_t c)
-{
+void fnDebug(uint16_t x)
+{	
+	SetAlarm(x);
 }
 FINSH_FUNCTION_EXPORT_ALIAS(fnDebug,debug,Debug Function)
 
@@ -273,13 +276,13 @@ void Setting_Write(void)
 	uint8_t t;
 	while (1)
 	{
-	IIC_WriteSeq(AT24C32_ADDRESS,SETTING_BASE,Setting,SETTING_LENGTH);
-	rt_thread_delay_hmsm(0,0,0,10);
-	IIC_ReadSeq(AT24C32_ADDRESS,SETTING_BASE+1, &t,1);
-	if (t!=Setting[1])
-		rt_thread_delay_hmsm(0,0,0,10);
-	else
-		break;
+		IIC_WriteSeq(AT24C32_ADDRESS,SETTING_BASE,Setting,SETTING_LENGTH);
+		rt_thread_delay_hmsm(0,0,0,100);
+		IIC_ReadSeq(AT24C32_ADDRESS,SETTING_BASE+1, &t,1);
+		if (t!=Setting[1])
+			rt_thread_delay_hmsm(0,0,0,100);
+		else
+			break;
 	}
 	return;
 }
@@ -344,3 +347,10 @@ FINSH_VAR_EXPORT(voltage, finsh_type_uchar, The Power Voltage)
 
 FINSH_FUNCTION_EXPORT_ALIAS(fnSetAlarmClock,alarm,Set Alarm Clock(hh,mm,ss))
 
+void ResetEEPROM(void)
+{
+	Setting[0] = 42;
+	Setting_Write();
+	return;
+}
+FINSH_FUNCTION_EXPORT(ResetEEPROM , Reset EEPROM )
