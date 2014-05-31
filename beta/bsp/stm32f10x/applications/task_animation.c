@@ -40,10 +40,10 @@ uint8_t emoticon[][8] =
 	{0x00,0x62,0x64,0x08,0x10,0x26,0x46,0x00},		//Percentage
 };
 
-#define N_APP 5
+#define N_APP 3
 const uint8_t app_icon_index[N_APP] = 
 {
-	ICON_BLANK,ICON_CLOCK,ICON_REDHEART,ICON_JIONG,ICON_42
+	ICON_BLANK,ICON_CLOCK,ICON_REDHEART,
 };
 
 rt_uint8_t animation_stack[4096];
@@ -61,10 +61,10 @@ extern uint8_t rtc_Y,rtc_M,rtc_D,rtc_h,rtc_m,rtc_s;
 
 void rt_thread_animation_entry(void* parameter)
 {
-	extern rt_event_t f_msg;
+	extern rt_event_t f_msg,f_en;
 	int8_t app,flag;
 	rt_uint32_t msg;
-	rt_thread_delay_hmsm(0,0,3,0);
+	rt_thread_delay_hmsm(0,0,1,0);
 	ani_switch(2,emoticon[ICON_BLANK],1024);
 	while (1)
 	{
@@ -73,7 +73,8 @@ void rt_thread_animation_entry(void* parameter)
 		{
 			ani_switch_2char(2,singlechar[rtc_h/10],singlechar[rtc_h%10],768);
 			ani_switch_2char(2,singlechar[CHAR_COMMENT],singlechar[rtc_m/10],768);
-			ani_switch_2char(2,singlechar[rtc_m%10],singlechar[CHAR_BLANK],768);
+			ani_switch_2char(2,singlechar[rtc_m%10],singlechar[CHAR_COMMENT],768);
+			ani_switch_2char(2,singlechar[rtc_s/10],singlechar[rtc_s%10],768);
 			ani_switch(2,emoticon[ICON_BLANK],768);
 		}
 		if (msg&F_ANI_DATE)
@@ -128,7 +129,10 @@ void rt_thread_animation_entry(void* parameter)
 				}
 			}
 			if (app&&flag)
+			{
 				ani_switch(1,emoticon[app_icon_index[0]],256);
+				rt_event_send(f_en,(1<<(app-1)));
+			}
 			else if (app&&(!flag))
 				ani_switch(0,emoticon[app_icon_index[0]],128);
 		}

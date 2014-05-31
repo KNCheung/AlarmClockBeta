@@ -68,9 +68,36 @@
 #define F_ANI_NEXT			0x00000010
 #define F_ANI_CHOOSE		0x00000020
 
+#define F_EN_COUNTER		0x00000001
+#define F_EN_POMODORO		0x00000002
+
+#define F_KEY_11			0x00000001
+#define F_KEY_12			0x00000002
+#define F_KEY_13			0x00000004
+#define F_KEY_21			0x00000010
+#define F_KEY_22			0x00000020
+#define F_KEY_23			0x00000040
+#define F_KEY_31			0x00000100
+#define F_KEY_32			0x00000200
+#define F_KEY_33			0x00000400
+#define F_KEY_41			0x00001000
+#define F_KEY_42			0x00002000
+#define F_KEY_43			0x00004000
+#define F_KEY_51			0x00010000
+#define F_KEY_52			0x00020000
+#define F_KEY_53			0x00040000
+#define F_KEY_61			0x00100000
+#define F_KEY_62			0x00200000
+#define F_KEY_63			0x00400000
+#define F_KEY_71			0x01000000
+#define F_KEY_72			0x02000000
+#define F_KEY_73			0x04000000
+
 #include <task_clock.h>
 #include <task_animation.h>
 #include <task_ui.h>
+#include <task_pomodoro.h>
+#include <task_counter.h>
 #include <task_temp.h>
 #include <task_doge.h>
 

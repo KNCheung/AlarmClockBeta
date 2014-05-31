@@ -28,18 +28,24 @@
 
 #include <application.h>
 
+#define RELEASE
+
 ALIGN(RT_ALIGN_SIZE)
 rt_thread_t init_thread;
 
-rt_mutex_t 	m_display	=	NULL;
+rt_mutex_t 	m_reg		=	NULL;
 rt_mq_t 	mq_ir		=	NULL;
 rt_event_t 	f_msg		=	NULL;
+rt_event_t	f_en		=	NULL;
+rt_event_t	f_key		=	NULL;
 
 void idle_hook(void);
 
 void idle_hook(void)
 {
+#ifdef RELEASE
 	__asm("WFI");
+#endif
 }
 
 void rt_init_thread_entry(void* parameter)
@@ -59,7 +65,12 @@ void rt_init_thread_entry(void* parameter)
   task_temp_init();
   task_animation_init();
   task_ui_init();
+  task_counter_init();
+  task_pomodoro_init();
+	
+#ifdef RELEASE
   task_doge_init();
+#endif
 
   rt_thread_delete(init_thread);
   while (1);
@@ -67,14 +78,17 @@ void rt_init_thread_entry(void* parameter)
 
 int rt_task_object_init(void)
 {
-	m_display = rt_mutex_create("Display",RT_IPC_FLAG_FIFO);
+	m_reg = rt_mutex_create("REG",RT_IPC_FLAG_FIFO);
 	mq_ir = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
 	f_msg = rt_event_create("Msg",RT_IPC_FLAG_FIFO);
+	f_en  = rt_event_create("ENABLE",RT_IPC_FLAG_FIFO);
+	f_key = rt_event_create("App Key",RT_IPC_FLAG_FIFO);
 	return 0;
 }
 
 int rt_application_init(void)
 {
+	refresh_rtc();
 	init_thread = rt_thread_create("init",
 	                               rt_init_thread_entry, RT_NULL,
 	                               2048, RT_THREAD_PRIORITY_MAX-2, 1);

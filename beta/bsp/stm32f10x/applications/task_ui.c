@@ -5,12 +5,11 @@
 #include <stdlib.h>
 
 rt_uint8_t ui_stack[256];
+uint8_t ui_disp[4]={0x0A,0x0A,0x0A,0x0A};
 struct rt_thread ui_thread;
 
 void task_ui_init(void);
 void rt_thread_ui_entry(void* parameter);
-
-extern int16_t temperature,humidity;
 
 extern rt_mq_t mq_ir;
 
@@ -31,31 +30,60 @@ void task_ui_init(void)
 void rt_thread_ui_entry(void* parameter)
 {
 	uint32_t code;
-	extern rt_event_t f_msg;
+	extern rt_event_t f_msg,f_en,f_key;
 	extern uint8_t emoticon[][8];
+	extern uint8_t rtc_Y,rtc_M,rtc_D,rtc_h,rtc_m,rtc_s;
+	extern int16_t temperature,humidity;
+	extern rt_mutex_t m_reg;
+	
 	rt_thread_delay_hmsm(0,0,1,0);
     while (rt_mq_recv(mq_ir,&code,sizeof(uint32_t),0)==RT_EOK);
+	rt_event_recv(f_en,0xFFFFFFFF,RT_EVENT_FLAG_CLEAR|RT_EVENT_FLAG_OR,0,NULL);
 	while (1)
 	{
-		rt_mq_recv(mq_ir,&code,sizeof(uint32_t),RT_WAITING_FOREVER);
-		switch (code%256)
+		if (rt_mq_recv(mq_ir,&code,sizeof(uint32_t),RT_TICK_PER_SECOND/2)==RT_EOK)
+			switch (code%256)
+			{
+				case 0xA2:	rt_event_send(f_key,F_KEY_11); rt_event_send(f_msg,F_ANI_TIME);	break;
+				case 0x62:	rt_event_send(f_key,F_KEY_12); rt_event_send(f_msg,F_ANI_DATE);	break;
+				case 0xE2:	rt_event_send(f_key,F_KEY_13); rt_event_send(f_msg,F_ANI_TEMP);	break;
+				case 0x22:	rt_event_send(f_key,F_KEY_21); rt_event_send(f_msg,F_ANI_PREV);	break;
+				case 0x02:	rt_event_send(f_key,F_KEY_22); rt_event_send(f_msg,F_ANI_NEXT);	break;
+				case 0xC2:	rt_event_send(f_key,F_KEY_23); rt_event_send(f_msg,F_ANI_CHOOSE);	break;
+				case 0xE0:	rt_event_send(f_key,F_KEY_31); break;
+				case 0xA8:	rt_event_send(f_key,F_KEY_32); break;
+				case 0x90:  rt_event_send(f_key,F_KEY_33); break;
+				case 0x68:	rt_event_send(f_key,F_KEY_41); break;
+				case 0x98:	rt_event_send(f_key,F_KEY_42); break;
+				case 0xB0:  rt_event_send(f_key,F_KEY_43); break;
+				case 0x30:	rt_event_send(f_key,F_KEY_51); break;
+				case 0x18:	rt_event_send(f_key,F_KEY_52); break;
+				case 0x7A:  rt_event_send(f_key,F_KEY_53); break;
+				case 0x10:	rt_event_send(f_key,F_KEY_61); break;
+				case 0x38:	rt_event_send(f_key,F_KEY_62); break;
+				case 0x5A:  rt_event_send(f_key,F_KEY_63); break;
+				case 0x52:	
+					PushBitMap(REG1,emoticon[ICON_JIONG]);
+					PushREG(REG2,REG_X1,0x0C);
+					PushREG(REG2,REG_X2,0x0B);
+					PushREG(REG2,REG_X3,0x0D);
+					PushREG(REG2,REG_X4,0x0E);
+					while(1);
+				default:
+					break;
+			}
+		if (rt_mutex_take(m_reg,0)==RT_EOK)
 		{
-			case 0xA2:	rt_event_send(f_msg,F_ANI_TIME);	break;
-			case 0x62:	rt_event_send(f_msg,F_ANI_DATE);	break;
-			case 0xE2:	rt_event_send(f_msg,F_ANI_TEMP);	break;
-			case 0x22:	rt_event_send(f_msg,F_ANI_PREV);	break;
-			case 0x02:	rt_event_send(f_msg,F_ANI_NEXT);	break;
-			case 0xC2:	rt_event_send(f_msg,F_ANI_CHOOSE);	break;
-			case 0x5A:	break;
-			case 0x52:	
-				PushBitMap(REG1,emoticon[ICON_JIONG]);
-				PushREG(REG2,REG_X1,0x0C);
-				PushREG(REG2,REG_X2,0x0B);
-				PushREG(REG2,REG_X3,0x0D);
-				PushREG(REG2,REG_X4,0x0E);
-				while(1);
-			default:
-				break;
+			PushREG(REG2,REG_X1,rtc_h/10);
+			PushREG(REG2,REG_X2,0x80|(rtc_h%10));
+			PushREG(REG2,REG_X3,rtc_m/10);
+			PushREG(REG2,REG_X4,rtc_m%10);
+			rt_mutex_release(m_reg);
+		}else{
+			PushREG(REG2,REG_X1,ui_disp[0]);
+			PushREG(REG2,REG_X2,ui_disp[1]);
+			PushREG(REG2,REG_X3,ui_disp[2]);
+			PushREG(REG2,REG_X4,ui_disp[3]);
 		}
 	}
 }

@@ -20,7 +20,7 @@
 #include "REG2.h"
 #include "TIM.h"
 #include "IIC.h"
-#include "sRTC.h"
+#include <sRTC.h>
 #include "AM2302.h"
 #include "IR.h"
 #include <DS18B20.h>

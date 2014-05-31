@@ -12,7 +12,7 @@
 #define RT_THREAD_PRIORITY_MAX	32
 
 /* Tick per Second */
-#define RT_TICK_PER_SECOND	100
+#define RT_TICK_PER_SECOND	50
 
 /* SECTION: RT_DEBUG */
 /* Thread Debug */
@@ -25,7 +25,7 @@
 #define RT_USING_HOOK
 
 /* Using Software Timer */
-//#define RT_USING_TIMER_SOFT 
+#define RT_USING_TIMER_SOFT 
 #define RT_TIMER_THREAD_PRIO		4
 #define RT_TIMER_THREAD_STACK_SIZE	512
 #define RT_TIMER_TICK_PER_SECOND	10
