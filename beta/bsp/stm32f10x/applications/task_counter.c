@@ -43,13 +43,13 @@ void rt_thread_counter_entry(void* parameter)
 			state=0x80;
 			ui_disp[2]=0;
 			ui_disp[3]=0;
-			rt_event_recv(f_key,F_KEY_31|F_KEY_32,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,0,&e);
+			rt_event_recv(f_key,F_KEY_31|F_KEY_33,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,0,&e);
 			while (1)
 			{
-				while (rt_event_recv(f_key,F_KEY_31|F_KEY_32,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/2,&e)!=RT_EOK)
+				while (rt_event_recv(f_key,F_KEY_31|F_KEY_33,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/2,&e)!=RT_EOK)
 				{
 					sRTC_GetRTC(sRTC_GetTS()-ts,NULL,NULL,NULL,&h,&m,&s);
-					if (m<15)
+					if ((m<15)&&(h==0))
 					{
 						ui_disp[0]=(m/10);
 						ui_disp[1]=0x80|(m%10);
@@ -62,17 +62,17 @@ void rt_thread_counter_entry(void* parameter)
 						ui_disp[3]=m%10;
 					}
 				}
-				if (e&F_KEY_32) break;
+				if (e&F_KEY_33) break;
 				else 
 				{
 					state|=0x01;
-					while (rt_event_recv(f_key,F_KEY_31|F_KEY_32,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/2,&e)!=RT_EOK)
+					while (rt_event_recv(f_key,F_KEY_31|F_KEY_33,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/2,&e)!=RT_EOK)
 					{
 						state^=0x01;
 						PushREG(REG2,REG_Shut,state);
 					}
 					PushREG(REG2,REG_Shut,0x01);
-					if (e&F_KEY_32) break;
+					if (e&F_KEY_33) break;
 				}
 			}
 			rt_mutex_release(m_reg);

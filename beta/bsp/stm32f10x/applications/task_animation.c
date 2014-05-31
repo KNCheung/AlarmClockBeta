@@ -71,29 +71,25 @@ void rt_thread_animation_entry(void* parameter)
 		rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR,RT_WAITING_FOREVER,&msg);
 		if (msg&F_ANI_TIME)
 		{
-			ani_switch_2char(2,singlechar[rtc_h/10],singlechar[rtc_h%10],768);
-			ani_switch_2char(2,singlechar[CHAR_COMMENT],singlechar[rtc_m/10],768);
-			ani_switch_2char(2,singlechar[rtc_m%10],singlechar[CHAR_COMMENT],768);
-			ani_switch_2char(2,singlechar[rtc_s/10],singlechar[rtc_s%10],768);
-			ani_switch(2,emoticon[ICON_BLANK],768);
+			ani_switch_2char(6,singlechar[rtc_h/10],singlechar[rtc_h%10],128);
+			rt_thread_delay_hmsm(0,0,0,500);
+			ani_switch_2char(6,singlechar[rtc_m/10],singlechar[rtc_m%10],128);
+			rt_thread_delay_hmsm(0,0,0,500);
+			ani_switch(7,emoticon[ICON_BLANK],128);
 		}
 		if (msg&F_ANI_DATE)
 		{
-			ani_switch_2char(2,singlechar[rtc_M/10],singlechar[rtc_M%10],768);
-			ani_switch_2char(2,singlechar[CHAR_MINUS],singlechar[rtc_D/10],768);
-			ani_switch_2char(2,singlechar[rtc_D%10],singlechar[CHAR_BLANK],768);
-			ani_switch(2,emoticon[ICON_BLANK],768);
+			ani_switch_2char(5,singlechar[rtc_D/10],singlechar[rtc_D%10],128);
+			rt_thread_delay_hmsm(0,0,0,500);
+			ani_switch(4,emoticon[ICON_BLANK],128);
 		}
 		if (msg&F_ANI_TEMP)
 		{
-			ani_switch_2char(2,singlechar[temperature/100%10],singlechar[temperature/10%10],768);
-			ani_switch_2char(2,singlechar[CHAR_DOT],singlechar[temperature%10],768);
-			ani_switch(2,emoticon[ICON_CELSIUS],768);
-			ani_switch(2,emoticon[ICON_BLANK],768);
-			ani_switch_2char(2,singlechar[humidity/100%10],singlechar[humidity/10%10],768);
-			ani_switch_2char(2,singlechar[CHAR_DOT],singlechar[humidity%10],768);
-			ani_switch(2,emoticon[ICON_PERCENTAGE],768);
-			ani_switch(2,emoticon[ICON_BLANK],768);
+			ani_switch_2char(7,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
+			rt_thread_delay_hmsm(0,0,0,500);
+			ani_switch_2char(7,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
+			rt_thread_delay_hmsm(0,0,0,500);
+			ani_switch(6,emoticon[ICON_BLANK],128);
 		}
 		if (msg&(F_ANI_PREV|F_ANI_NEXT))
 		{
