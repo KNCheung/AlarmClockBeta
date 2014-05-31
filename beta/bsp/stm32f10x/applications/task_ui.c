@@ -68,7 +68,7 @@ void rt_thread_ui_entry(void* parameter)
 					PushREG(REG2,REG_X2,0x0B);
 					PushREG(REG2,REG_X3,0x0D);
 					PushREG(REG2,REG_X4,0x0E);
-					PushREG(REGA,REG_Shut,0x01);
+					PushREG(REGA,REG_Shut,0x01,0x01);
 					while(1);
 				default:
 					break;

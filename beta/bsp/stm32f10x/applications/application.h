@@ -59,6 +59,7 @@
 #define PRIO_CLOCK			RT_THREAD_PRIORITY_MAX-5
 #define PRIO_REG			RT_THREAD_PRIORITY_MAX-3
 #define PRIO_ANIMATION		RT_THREAD_PRIORITY_MAX-3
+#define PRIO_LED			RT_THREAD_PRIORITY_MAX-3
 #define PRIO_DOGE			RT_THREAD_PRIORITY_MAX-1
 
 #define F_ANI_TIME			0x00000001
@@ -100,6 +101,7 @@
 #include <task_counter.h>
 #include <task_temp.h>
 #include <task_doge.h>
+#include <task_led.h>
 
 #include <usr_cmd.h>
 

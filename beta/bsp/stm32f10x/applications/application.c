@@ -38,6 +38,8 @@ rt_mq_t 	mq_ir		=	NULL;
 rt_event_t 	f_msg		=	NULL;
 rt_event_t	f_en		=	NULL;
 rt_event_t	f_key		=	NULL;
+rt_event_t  f_led		=	NULL;
+rt_mutex_t	m_led		=	NULL;
 
 void idle_hook(void);
 
@@ -67,6 +69,7 @@ void rt_init_thread_entry(void* parameter)
   task_ui_init();
   task_counter_init();
   task_pomodoro_init();
+  task_led_init();
 	
 #ifdef RELEASE
   task_doge_init();
@@ -79,10 +82,12 @@ void rt_init_thread_entry(void* parameter)
 int rt_task_object_init(void)
 {
 	m_reg = rt_mutex_create("REG",RT_IPC_FLAG_FIFO);
+	m_led = rt_mutex_create("LED",RT_IPC_FLAG_FIFO);
 	mq_ir = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
 	f_msg = rt_event_create("Msg",RT_IPC_FLAG_FIFO);
 	f_en  = rt_event_create("ENABLE",RT_IPC_FLAG_FIFO);
 	f_key = rt_event_create("App Key",RT_IPC_FLAG_FIFO);
+	f_led = rt_event_create("LED",RT_IPC_FLAG_FIFO);
 	return 0;
 }
 

@@ -71,11 +71,11 @@ void rt_thread_animation_entry(void* parameter)
 		rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR,RT_WAITING_FOREVER,&msg);
 		if (msg&F_ANI_TIME)
 		{
-			ani_switch_2char(6,singlechar[rtc_h/10],singlechar[rtc_h%10],128);
+			ani_switch_2char(7,singlechar[rtc_h/10],singlechar[rtc_h%10],128);
 			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch_2char(6,singlechar[rtc_m/10],singlechar[rtc_m%10],128);
+			ani_switch_2char(7,singlechar[rtc_m/10],singlechar[rtc_m%10],128);
 			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch(7,emoticon[ICON_BLANK],128);
+			ani_switch(6,emoticon[ICON_BLANK],128);
 		}
 		if (msg&F_ANI_DATE)
 		{
@@ -85,11 +85,11 @@ void rt_thread_animation_entry(void* parameter)
 		}
 		if (msg&F_ANI_TEMP)
 		{
-			ani_switch_2char(7,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
+			ani_switch_2char(6,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
 			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch_2char(7,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
+			ani_switch_2char(6,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
 			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch(6,emoticon[ICON_BLANK],128);
+			ani_switch(7,emoticon[ICON_BLANK],128);
 		}
 		if (msg&(F_ANI_PREV|F_ANI_NEXT))
 		{
