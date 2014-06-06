@@ -6,6 +6,7 @@
 #define REG2_CLK		GPIO_Pin_12
 
 static uint8_t REG_NUM;
+void Transposition(uint8_t *A,uint8_t *B);
 
 void ShiftOut(GPIO_TypeDef *GPIOx, uint16_t SDA,uint16_t SCL, uint8_t order, uint8_t data)
 {
@@ -94,4 +95,17 @@ void PushBitMap(uint8_t n,uint8_t *BitMap)
 	uint8_t i;
 	for (i=0;i<8;i++)
 		PushREG(n,i+1,BitMap[i]);
+}
+
+void Transposition(uint8_t *A,uint8_t *B)
+{
+	uint8_t i,j,t[8];
+	for (i=0;i<8;i++)
+		t[i]=A[i];
+	for (i=0;i<8;i++)
+		for (j=0;j<8;j++)
+		{
+			B[j]=(B[j]<<1)+((t[i]&0x80)?1:0);
+			t[i]<<=1;
+		}
 }

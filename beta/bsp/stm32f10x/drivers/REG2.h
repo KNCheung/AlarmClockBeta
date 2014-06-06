@@ -39,5 +39,6 @@ void REG2_Init(uint8_t n);
 void ShiftOut(GPIO_TypeDef *GPIOx, uint16_t SDA,uint16_t SCL, uint8_t order, uint8_t data);
 void PushREG(uint8_t n, uint8_t REG, ...);
 void PushBitMap(uint8_t n, uint8_t *BitMap);
+void Transposition(uint8_t *A,uint8_t *B);
 
 #endif
