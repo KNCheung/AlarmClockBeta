@@ -68,51 +68,35 @@ void rt_thread_animation_entry(void* parameter)
 	ani_switch(2,emoticon[ICON_BLANK],1024);
 	while (1)
 	{
-		rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR,RT_WAITING_FOREVER,&msg);
-		if (msg&F_ANI_TIME)
+		if (rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR,RT_TICK_PER_SECOND,&msg)!=RT_EOK)
 		{
-			ani_switch_2char(7,singlechar[rtc_h/10],singlechar[rtc_h%10],128);
-			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch_2char(7,singlechar[rtc_m/10],singlechar[rtc_m%10],128);
-			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch(6,emoticon[ICON_BLANK],128);
-		}
-		if (msg&F_ANI_DATE)
-		{
-			ani_switch_2char(5,singlechar[rtc_D/10],singlechar[rtc_D%10],128);
-			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch(4,emoticon[ICON_BLANK],128);
-		}
-		if (msg&F_ANI_TEMP)
-		{
-			ani_switch_2char(6,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
-			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch_2char(6,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
-			rt_thread_delay_hmsm(0,0,0,500);
-			ani_switch(7,emoticon[ICON_BLANK],128);
-		}
-		if (msg&(F_ANI_PREV|F_ANI_NEXT))
-		{
-			app=0;
-			if (msg&F_ANI_PREV)
+			PushBitMap(REG1,emoticon[ICON_BLANK]);
+		}else{
+			if (msg&F_ANI_TIME)
 			{
-				app=(app-1+N_APP)%N_APP;
-				ani_switch(6,emoticon[app_icon_index[app]],128);
+				ani_switch_2char(7,singlechar[rtc_h/10],singlechar[rtc_h%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch_2char(7,singlechar[rtc_m/10],singlechar[rtc_m%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch(6,emoticon[ICON_BLANK],128);
 			}
-			else 
+			if (msg&F_ANI_DATE)
 			{
-				app=(app+1)%N_APP;
-				ani_switch(7,emoticon[app_icon_index[app]],128);
+				ani_switch_2char(5,singlechar[rtc_D/10],singlechar[rtc_D%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch(4,emoticon[ICON_BLANK],128);
 			}
-			rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&msg);
-			flag=0;
-			while (rt_event_recv(f_msg,F_ANI_NEXT|F_ANI_PREV|F_ANI_CHOOSE,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*3,&msg)==RT_EOK)
+			if (msg&F_ANI_TEMP)
 			{
-				if (msg&F_ANI_CHOOSE)
-				{
-					flag=1;
-					break;
-				}
+				ani_switch_2char(6,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch_2char(6,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch(7,emoticon[ICON_BLANK],128);
+			}
+			if (msg&(F_ANI_PREV|F_ANI_NEXT))
+			{
+				app=0;
 				if (msg&F_ANI_PREV)
 				{
 					app=(app-1+N_APP)%N_APP;
@@ -123,16 +107,36 @@ void rt_thread_animation_entry(void* parameter)
 					app=(app+1)%N_APP;
 					ani_switch(7,emoticon[app_icon_index[app]],128);
 				}
+				rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&msg);
+				flag=0;
+				while (rt_event_recv(f_msg,F_ANI_NEXT|F_ANI_PREV|F_ANI_CHOOSE,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*3,&msg)==RT_EOK)
+				{
+					if (msg&F_ANI_CHOOSE)
+					{
+						flag=1;
+						break;
+					}
+					if (msg&F_ANI_PREV)
+					{
+						app=(app-1+N_APP)%N_APP;
+						ani_switch(6,emoticon[app_icon_index[app]],128);
+					}
+					else 
+					{
+						app=(app+1)%N_APP;
+						ani_switch(7,emoticon[app_icon_index[app]],128);
+					}
+				}
+				if (app&&flag)
+				{
+					ani_switch(1,emoticon[app_icon_index[0]],256);
+					rt_event_send(f_en,(1<<(app-1)));
+				}
+				else if (app&&(!flag))
+					ani_switch(0,emoticon[app_icon_index[0]],128);
 			}
-			if (app&&flag)
-			{
-				ani_switch(1,emoticon[app_icon_index[0]],256);
-				rt_event_send(f_en,(1<<(app-1)));
-			}
-			else if (app&&(!flag))
-				ani_switch(0,emoticon[app_icon_index[0]],128);
+			rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&msg);
 		}
-		rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&msg);
 	}
 }
 
