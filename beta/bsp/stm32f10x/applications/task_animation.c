@@ -43,7 +43,7 @@ uint8_t emoticon[][8] =
 #define N_APP 3
 const uint8_t app_icon_index[N_APP] = 
 {
-	ICON_BLANK,ICON_CLOCK,ICON_REDHEART,
+	ICON_BLANK,ICON_CLOCK,ICON_JIONG,
 };
 
 rt_uint8_t animation_stack[4096];
@@ -89,6 +89,8 @@ void rt_thread_animation_entry(void* parameter)
 			if (msg&F_ANI_TEMP)
 			{
 				ani_switch_2char(6,singlechar[(temperature+5)/100%10],singlechar[(temperature+5)/10%10],128);
+				rt_thread_delay_hmsm(0,0,0,500);
+				ani_switch_2char(6,singlechar[(outdoortemperature+5)/100%10],singlechar[(outdoortemperature+5)/10%10],128);
 				rt_thread_delay_hmsm(0,0,0,500);
 				ani_switch_2char(6,singlechar[(humidity+5)/100%10],singlechar[(humidity+5)/10%10],128);
 				rt_thread_delay_hmsm(0,0,0,500);

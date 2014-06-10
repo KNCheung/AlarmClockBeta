@@ -90,6 +90,7 @@ void rt_thread_ui_entry(void* parameter)
 		emoticon[ICON_BLANK][1]=(0x10)*(rtc_D/10%10)+(0x01)*(rtc_D%10);
 		emoticon[ICON_BLANK][2]=(0x10)*(rtc_h/10%10)+(0x01)*(rtc_h%10);
 		emoticon[ICON_BLANK][3]=(0x10)*(rtc_m/10%10)+(0x01)*(rtc_m%10);
+		emoticon[ICON_BLANK][4]=0;
 		emoticon[ICON_BLANK][5]=(0x10)*((temperature+5)/100%10)+(0x01)*((temperature+5)/10%10);
 		emoticon[ICON_BLANK][6]=(0x10)*((outdoortemperature+5)/100%10)+(0x01)*((outdoortemperature+5)/10%10);
 		emoticon[ICON_BLANK][7]=(0x10)*((humidity+5)/100%10)+(0x01)*((humidity+5)/10%10);
