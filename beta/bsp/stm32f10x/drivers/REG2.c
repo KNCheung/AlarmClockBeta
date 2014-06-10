@@ -53,7 +53,6 @@ void REG2_Init(uint8_t n)
 	PushREG(REGA,REG_Test,0x00,0x00);
 	PushREG(REGA,REG_Dec,0x00,0x0f);
 	PushREG(REGA,REG_Scan,0x07,0x03);
-	PushREG(0,REG_NONE);
 	PushREG(REGA,REG_Int,0x02,0x01);
 	PushREG(REGA,REG_X1,0x00,0x0A);
 	PushREG(REGA,REG_X2,0x04,0x0A);

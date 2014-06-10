@@ -16,7 +16,7 @@ void task_temp_init(void)
 {
 	rt_err_t result;
 	rt_enter_critical();
-//	DS18B20_StartConvTemp();
+	DS18B20_StartConvTemp();
 	rt_exit_critical();
 	result = rt_thread_init(&temp_thread,
 	                        "temperature",
@@ -36,7 +36,7 @@ void rt_thread_temp_entry(void* parameter)
 	while(1)
 	{
 		rt_enter_critical();
-	//	DS18B20_StartConvTemp();
+		DS18B20_StartConvTemp();
 		rt_exit_critical();
 		while (AM2302_Read(&h,&t)==ERROR)
 		{
@@ -47,7 +47,7 @@ void rt_thread_temp_entry(void* parameter)
 		humidity=h;
 		rt_thread_delay_hmsm(0,0,3,0);
 		rt_enter_critical();
-	//	outdoortemperature=(int16_t)(DS18B20_ReadTemp()*10);
+		outdoortemperature=(int16_t)(DS18B20_ReadTemp()*10);
 		rt_exit_critical();
 		rt_thread_delay_hmsm(0,0,10,0);
 	}

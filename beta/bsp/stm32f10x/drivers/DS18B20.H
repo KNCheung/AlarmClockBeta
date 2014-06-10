@@ -28,4 +28,6 @@ ErrorStatus OneWire_Reset(void);
 void DS18B20_StartConvTemp(void);
 float DS18B20_ReadTemp(void);
 
+void OneWire_Test(void);
+
 #endif

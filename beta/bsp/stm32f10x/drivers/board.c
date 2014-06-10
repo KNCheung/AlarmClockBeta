@@ -198,7 +198,7 @@ void rt_hw_board_init(void)
 	fnCfgTIM2();
 	AM2302_Init();
 	IR_Init();
-	//OneWire_Init();
+	OneWire_Init();
 }
 
 /*@}*/

@@ -33,7 +33,7 @@ void rt_thread_ui_entry(void* parameter)
 	extern rt_event_t f_msg,f_en,f_key;
 	extern uint8_t emoticon[][8];
 	extern uint8_t rtc_Y,rtc_M,rtc_D,rtc_h,rtc_m,rtc_s;
-	extern int16_t temperature,humidity;
+	extern int16_t temperature,humidity,outdoortemperature;
 	extern rt_mutex_t m_reg;
 	
 	rt_thread_delay_hmsm(0,0,1,0);
@@ -86,14 +86,13 @@ void rt_thread_ui_entry(void* parameter)
 			PushREG(REG2,REG_X3,ui_disp[2]);
 			PushREG(REG2,REG_X4,ui_disp[3]);
 		}
-		emoticon[ICON_BLANK][0]=0;
-		emoticon[ICON_BLANK][1]=(0x10)*(rtc_M/10%10)+(0x01)*(rtc_M%10);
-		emoticon[ICON_BLANK][2]=(0x10)*(rtc_D/10%10)+(0x01)*(rtc_D%10);
-		emoticon[ICON_BLANK][3]=(0x10)*(rtc_h/10%10)+(0x01)*(rtc_h%10);
-		emoticon[ICON_BLANK][4]=(0x10)*(rtc_m/10%10)+(0x01)*(rtc_m%10);
+		emoticon[ICON_BLANK][0]=(0x10)*(rtc_M/10%10)+(0x01)*(rtc_M%10);
+		emoticon[ICON_BLANK][1]=(0x10)*(rtc_D/10%10)+(0x01)*(rtc_D%10);
+		emoticon[ICON_BLANK][2]=(0x10)*(rtc_h/10%10)+(0x01)*(rtc_h%10);
+		emoticon[ICON_BLANK][3]=(0x10)*(rtc_m/10%10)+(0x01)*(rtc_m%10);
 		emoticon[ICON_BLANK][5]=(0x10)*((temperature+5)/100%10)+(0x01)*((temperature+5)/10%10);
-		emoticon[ICON_BLANK][6]=(0x10)*((humidity+5)/100%10)+(0x01)*((humidity+5)/10%10);
-		emoticon[ICON_BLANK][7]=0;
+		emoticon[ICON_BLANK][6]=(0x10)*((outdoortemperature+5)/100%10)+(0x01)*((outdoortemperature+5)/10%10);
+		emoticon[ICON_BLANK][7]=(0x10)*((humidity+5)/100%10)+(0x01)*((humidity+5)/10%10);
 		Transposition(emoticon[ICON_BLANK],emoticon[ICON_BLANK]);
 	}
 }

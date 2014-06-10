@@ -1,10 +1,16 @@
 #include "board.h"
 
+#if SystemCoreClock>24000000
+#define OFFSET 0
+#else
+#define OFFSET 5
+#endif
+
 void Delay_us(uint16_t n)
 {
   volatile uint16_t t;
   t=TIM_GetCounter(TIM4);
-  while ((uint16_t)(TIM_GetCounter(TIM4)-t)<n);
+  while ((uint16_t)(TIM_GetCounter(TIM4)-t)<(n-OFFSET));
 	return;
 }
 

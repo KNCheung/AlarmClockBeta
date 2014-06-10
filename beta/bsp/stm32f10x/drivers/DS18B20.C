@@ -63,10 +63,9 @@ BitAction OneWire_ReadBit(void)
 	OneWire_Rx();
 	Delay_us(5);
 	x=(GPIO_ReadInputDataBit(OneWire_Port,OneWire_Pin))?Bit_SET:Bit_RESET;
-	Delay_us(45);
+	Delay_us(48);
 	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
-	
 	return x;
 }
 
@@ -74,7 +73,6 @@ void OneWire_WriteBit(BitAction x)
 {
 	OneWire_Tx();
 	GPIO_SetBits(OneWire_Port,OneWire_Pin);
-	Delay_us(1);
 	GPIO_ResetBits(OneWire_Port,OneWire_Pin);
 	Delay_us(5);
 	GPIO_WriteBit(OneWire_Port,OneWire_Pin,x);
@@ -125,4 +123,13 @@ float DS18B20_ReadTemp(void)
 	tmp_i=(M<<4)|(L>>4);
 	ans=tmp_i+(L%16)/16.0f;
 	return ans;
+}
+
+void OneWire_Test(void)
+{
+	OneWire_Tx();
+	GPIO_ResetBits(OneWire_Port,OneWire_Pin);
+	Delay_us(500);
+	GPIO_SetBits(OneWire_Port,OneWire_Pin);
+	OneWire_Rx();
 }
