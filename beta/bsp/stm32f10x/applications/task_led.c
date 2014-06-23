@@ -4,32 +4,26 @@
 
 #include <stdlib.h>
 
-#define SCALE_R	255
-#define SCALE_G	60
-#define SCALE_B	60
-
-#define SET_R(x) TIM_SetCompare2(TIM2,(x))
-#define SET_G(x) TIM_SetCompare3(TIM2,(x))
-#define SET_B(x) TIM_SetCompare4(TIM2,(x))
-
 rt_uint8_t led_stack[256];
 struct rt_thread led_thread;
-uint8_t Rs,Re,Gs,Ge,Bs,Be;
 extern rt_event_t f_led;
+
+uint8_t LED_State;
+
+const uint8_t led_color[][3]={
+	{0,0,0},		//BLACK
+	{255,0,0},		//RED
+	{0,80,0},		//GREEN
+	{0,0,255},		//BLUE
+	{255,0,80},		//PURPLE
+	{0,80,100},		//CYAN
+	{255,60,0},		//YELLOW
+	{255,80,100},	//WHITE
+};
 	
 void task_led_init(void);
 void rt_thread_led_entry(void* parameter);
-
-void set_led(uint32_t a,uint32_t b,uint32_t t)
-{
-	Rs=(((0x00FF0000)& a )/0x00010000)%256;
-	Re=(((0x00FF0000)& b )/0x00010000)%256;
-	Gs=(((0x0000FF00)& a )/0x00000100)%256;
-	Ge=(((0x0000FF00)& b )/0x00000100)%256;
-	Bs=(((0x000000FF)& a )/0x00000001)%256;
-	Be=(((0x000000FF)& b )/0x00000001)%256;
-	rt_event_send(f_led,(rt_uint32_t)(t/2));
-}
+void change_led(uint8_t j,uint8_t k);
 
 void task_led_init(void)
 {
@@ -43,42 +37,46 @@ void task_led_init(void)
 	                        sizeof(led_stack),
 	                        PRIO_LED,
 	                        2);
-	//if (result == RT_EOK) rt_thread_startup(&led_thread);
+	if (result == RT_EOK) rt_thread_startup(&led_thread);
 }
 
 void rt_thread_led_entry(void* parameter)
 {
-	static rt_uint32_t e,t;
+	static rt_uint32_t e;
 	static uint8_t s;
-	static int32_t i;
+	static int32_t i,j,k;
+	extern rt_mutex_t m_display;
 	rt_event_recv(f_led,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&e);
-	t=RT_TICK_PER_SECOND;
+	LED_RGB(0,0,0);
+			
 	while(1)
 	{
-		if (rt_event_recv(f_led,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/20,&e)==RT_EOK)
+		if (rt_event_recv(f_led,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e)==RT_EOK)
 		{
-			t=e;
-			i=0;
-			s=1;
-		}
-		SET_R(Rs+i*(Re-Rs)/t);
-		SET_G(Gs+i*(Ge-Gs)/t);
-		SET_B(Bs+i*(Be-Bs)/t);
-		if (s==1) 
-		{
-			i+=20;
-			if (i>t)
+			j=k;
+			k=0;
+			while (e)
 			{
-				i-=20;
-				s=0;
+				e>>=1;
+				k++;
 			}
-		}else{
-			i-=20;
-			if (i<0)
-			{
-				i+=20;
-				s=1;
-			}
+			k--;
+			change_led(j,k);
 		}
 	}
+}
+
+void change_led(uint8_t j,uint8_t k)
+{
+	uint8_t i;
+	if (j==k) return;
+	LED_State = LED_CHANGING;
+	for (i=10;i<=20;i++)
+	{
+		LED_RGB((led_color[k][0]-led_color[j][0])/20*i+led_color[j][0],(led_color[k][1]-led_color[j][1])/20*i+led_color[j][1],(led_color[k][2]-led_color[j][2])/20*i+led_color[j][2]);
+		rt_thread_delay(2);
+	}
+	LED_RGB(led_color[k][0],led_color[k][1],led_color[k][2]);
+	
+	LED_State = LED_CHANGED;
 }

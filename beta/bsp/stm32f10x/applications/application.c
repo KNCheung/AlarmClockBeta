@@ -33,7 +33,7 @@
 ALIGN(RT_ALIGN_SIZE)
 rt_thread_t init_thread;
 
-rt_mutex_t 	m_reg		=	NULL;
+rt_mutex_t 	m_display		=	NULL;
 rt_mq_t 	mq_ir		=	NULL;
 rt_event_t 	f_msg		=	NULL;
 rt_event_t	f_en		=	NULL;
@@ -81,7 +81,7 @@ void rt_init_thread_entry(void* parameter)
 
 int rt_task_object_init(void)
 {
-	m_reg = rt_mutex_create("REG",RT_IPC_FLAG_FIFO);
+	m_display = rt_mutex_create("REG",RT_IPC_FLAG_FIFO);
 	m_led = rt_mutex_create("LED",RT_IPC_FLAG_FIFO);
 	mq_ir = rt_mq_create("IR",sizeof(uint16_t),64,RT_IPC_FLAG_FIFO);
 	f_msg = rt_event_create("Msg",RT_IPC_FLAG_FIFO);

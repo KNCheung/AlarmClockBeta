@@ -34,7 +34,7 @@ void rt_thread_ui_entry(void* parameter)
 	extern uint8_t emoticon[][8];
 	extern uint8_t rtc_Y,rtc_M,rtc_D,rtc_h,rtc_m,rtc_s;
 	extern int16_t temperature,humidity,outdoortemperature;
-	extern rt_mutex_t m_reg;
+	extern rt_mutex_t m_display;
 	
 	rt_thread_delay_hmsm(0,0,1,0);
     while (rt_mq_recv(mq_ir,&code,sizeof(uint32_t),0)==RT_EOK);
@@ -63,23 +63,19 @@ void rt_thread_ui_entry(void* parameter)
 				case 0x38:	rt_event_send(f_key,F_KEY_62); break;
 				case 0x5A:  rt_event_send(f_key,F_KEY_63); break;
 				case 0x52:	
-					PushBitMap(REG1,emoticon[ICON_JIONG]);
-					PushREG(REG2,REG_X1,0x0C);
-					PushREG(REG2,REG_X2,0x0B);
-					PushREG(REG2,REG_X3,0x0D);
-					PushREG(REG2,REG_X4,0x0E);
-					PushREG(REGA,REG_Shut,0x01,0x01);
+					PushREG(REGA,REG_Shut,0x00,0x00);
+					LED_RGB(0,0,255);
 					while(1);
 				default:
 					break;
 			}
-		if (rt_mutex_take(m_reg,0)==RT_EOK)
+		if (rt_mutex_take(m_display,0)==RT_EOK)
 		{
 			PushREG(REG2,REG_X1,rtc_h/10);
 			PushREG(REG2,REG_X2,0x80|(rtc_h%10));
 			PushREG(REG2,REG_X3,rtc_m/10);
 			PushREG(REG2,REG_X4,rtc_m%10);
-			rt_mutex_release(m_reg);
+			rt_mutex_release(m_display);
 		}else{
 			PushREG(REG2,REG_X1,ui_disp[0]);
 			PushREG(REG2,REG_X2,ui_disp[1]);

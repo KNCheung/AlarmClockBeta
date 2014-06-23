@@ -26,8 +26,8 @@ void task_counter_init(void)
 
 void rt_thread_counter_entry(void* parameter)
 {
-	extern rt_event_t f_en,f_key;
-	extern rt_mutex_t m_reg;
+	extern rt_event_t f_en,f_key,f_led;
+	extern rt_mutex_t m_display;
 	extern uint8_t ui_disp[4];
 	uint32_t ts;
 	rt_uint32_t e;
@@ -35,8 +35,9 @@ void rt_thread_counter_entry(void* parameter)
 	while (1)
 	{
 		rt_event_recv(f_en,F_EN_COUNTER,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,RT_WAITING_FOREVER,&e);
-		if (rt_mutex_take(m_reg,0)==RT_EOK)
+		if (rt_mutex_take(m_display,0)==RT_EOK)
 		{
+			rt_event_send(f_led,LED_WHITE);
 			ts=sRTC_GetTS();
 			ui_disp[0]=0;
 			ui_disp[1]=0x80;
@@ -69,13 +70,14 @@ void rt_thread_counter_entry(void* parameter)
 					while (rt_event_recv(f_key,F_KEY_31|F_KEY_33,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND/2,&e)!=RT_EOK)
 					{
 						state^=0x01;
-						PushREG(REG2,REG_Shut,state);
+						rt_event_send(f_led,(state%2)?LED_WHITE:LED_BLACK);
 					}
-					PushREG(REG2,REG_Shut,0x01);
 					if (e&F_KEY_33) break;
+						rt_event_send(f_led,LED_WHITE);
 				}
 			}
-			rt_mutex_release(m_reg);
+			rt_event_send(f_led,LED_BLACK);
+			rt_mutex_release(m_display);
 		}
 		rt_event_recv(f_en,F_EN_COUNTER,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0,&e);
 	}

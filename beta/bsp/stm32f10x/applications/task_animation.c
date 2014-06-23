@@ -111,7 +111,7 @@ void rt_thread_animation_entry(void* parameter)
 				}
 				rt_event_recv(f_msg,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,0,&msg);
 				flag=0;
-				while (rt_event_recv(f_msg,F_ANI_NEXT|F_ANI_PREV|F_ANI_CHOOSE,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*3,&msg)==RT_EOK)
+				while (rt_event_recv(f_msg,F_ANI_NEXT|F_ANI_PREV|F_ANI_CHOOSE,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*1.5f,&msg)==RT_EOK)
 				{
 					if (msg&F_ANI_CHOOSE)
 					{

@@ -16,13 +16,12 @@ void reboot(void)
 }
 FINSH_FUNCTION_EXPORT(reboot ,Reboot the MCU)
 
-/*
 void fnDebug(uint16_t x)
 {	
-	SetAlarm(x);
 }
 FINSH_FUNCTION_EXPORT_ALIAS(fnDebug,debug,Debug Function)
 
+/*
 void Print_Setting(void)
 {
 	uint8_t i;
@@ -118,3 +117,10 @@ void ResetEEPROM(void)
 }
 FINSH_FUNCTION_EXPORT(ResetEEPROM , Reset EEPROM )
 */
+
+void SetLed(uint8_t x)
+{
+	extern rt_event_t f_led;
+	rt_event_send(f_led,(1<<(x-1)));
+}
+FINSH_FUNCTION_EXPORT(SetLed , Set LED value )
