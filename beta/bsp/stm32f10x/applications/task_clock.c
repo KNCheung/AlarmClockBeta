@@ -2,6 +2,8 @@
 #include <rtthread.h>
 #include <application.h>
 
+#include <stdlib.h>
+
 rt_uint8_t clock_stack[256];
 static struct rt_timer timer_add_second;
 struct rt_thread clock_thread;
@@ -38,6 +40,8 @@ void task_clock_init(void)
 void rt_thread_clock_entry(void* parameter)
 {
 	static const rt_tick_t tick_one_second = RT_TICK_PER_SECOND;
+	refresh_rtc();
+	srand(rtc_m*60+rtc_s+rtc_h*3600);
 	rt_thread_delay_hmsm(0,0,1,0);
 	rt_timer_start(&timer_add_second);
 	while(1)

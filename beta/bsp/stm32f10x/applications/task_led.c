@@ -66,7 +66,6 @@ void rt_thread_led_entry(void* parameter)
 			if (rt_mutex_take(m_display,0)==RT_EOK)
 			{
 				rt_mutex_release(m_display);
-				srand(TIM_GetCounter(TIM4)%128);
 				j=k;
 				do
 				{
