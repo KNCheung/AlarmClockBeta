@@ -16,8 +16,18 @@ void reboot(void)
 }
 FINSH_FUNCTION_EXPORT(reboot ,Reboot the MCU)
 
-void fnDebug(uint16_t x)
+uint8_t fnDebug(void)
 {	
+	uint8_t i,t;
+	GPIO_InitTypeDef usrGPIO;
+	usrGPIO.GPIO_Mode = GPIO_Mode_Out_OD;
+	usrGPIO.GPIO_Pin = GPIO_Pin_7;
+	usrGPIO.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_Init(GPIOA,&usrGPIO);
+	t=0;
+	for (i=0;i<8;i++)
+		t=(t<<1)+(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_7)?1:0);
+	return t;
 }
 FINSH_FUNCTION_EXPORT_ALIAS(fnDebug,debug,Debug Function)
 

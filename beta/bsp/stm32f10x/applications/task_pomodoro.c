@@ -34,6 +34,7 @@ void rt_thread_pomodoro_entry(void* parameter)
 	uint8_t state,h,m,s;
 	while (1)
 	{
+		rt_event_recv(f_en,F_EN_POMODORO,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0,&e);
 		rt_event_recv(f_en,F_EN_POMODORO,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,RT_WAITING_FOREVER,&e);
 		if (rt_mutex_take(m_display,0)==RT_EOK)
 		{

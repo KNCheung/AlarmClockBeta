@@ -34,6 +34,7 @@ void rt_thread_counter_entry(void* parameter)
 	uint8_t state,h,m,s;
 	while (1)
 	{
+		rt_event_recv(f_en,F_EN_COUNTER,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0,&e);
 		rt_event_recv(f_en,F_EN_COUNTER,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,RT_WAITING_FOREVER,&e);
 		if (rt_mutex_take(m_display,0)==RT_EOK)
 		{
@@ -79,6 +80,5 @@ void rt_thread_counter_entry(void* parameter)
 			rt_event_send(f_led,LED_BLACK);
 			rt_mutex_release(m_display);
 		}
-		rt_event_recv(f_en,F_EN_COUNTER,RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR ,0,&e);
 	}
 }

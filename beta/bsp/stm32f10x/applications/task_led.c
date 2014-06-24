@@ -51,7 +51,7 @@ void rt_thread_led_entry(void* parameter)
 			
 	while(1)
 	{
-		if (rt_event_recv(f_led,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_WAITING_FOREVER,&e)==RT_EOK)
+		if (rt_event_recv(f_led,0xFFFFFFFF,RT_EVENT_FLAG_OR|RT_EVENT_FLAG_CLEAR,RT_TICK_PER_SECOND*5,&e)==RT_EOK)
 		{
 			j=k;
 			k=0;
@@ -62,6 +62,18 @@ void rt_thread_led_entry(void* parameter)
 			}
 			k--;
 			change_led(j,k);
+		}else{
+			if (rt_mutex_take(m_display,0)==RT_EOK)
+			{
+				rt_mutex_release(m_display);
+				srand(TIM_GetCounter(TIM4)%128);
+				j=k;
+				do
+				{
+					k=rand()%8;
+				}while((j==k)||(k==0));
+				change_led(j,k);
+			}
 		}
 	}
 }
