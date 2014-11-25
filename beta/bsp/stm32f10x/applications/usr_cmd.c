@@ -115,7 +115,7 @@ void Set_Time(uint8_t Y,uint8_t M,uint8_t D,uint8_t w, uint8_t h,uint8_t m, uint
   time();
   return;
 }
-FINSH_FUNCTION_EXPORT(Set_Time , Set time(YY,MM,DD,w,hh,mm,ss))
+FINSH_FUNCTION_EXPORT(Set_Time , Set time(YY,MM,DD,W,hh,mm,ss))
 
 //FINSH_FUNCTION_EXPORT_ALIAS(fnSetAlarmClock,alarm,Set Alarm Clock(hh,mm,ss))
 /*

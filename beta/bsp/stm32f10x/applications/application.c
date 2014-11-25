@@ -46,7 +46,8 @@ void idle_hook(void);
 void idle_hook(void)
 {
 #ifdef RELEASE
-	__asm("WFI");
+	if (!DebugState)
+		__asm("WFI");
 #endif
 }
 

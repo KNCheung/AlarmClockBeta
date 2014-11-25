@@ -190,8 +190,8 @@ void rt_hw_board_init(void)
 #ifdef RT_USING_COMPONENTS_INIT
     rt_components_board_init();
 #endif
-	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB|RCC_APB2Periph_AFIO,ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);
 	IIC_Init();
 	REG2_Init(2);
 	cfgTIM();
@@ -199,6 +199,7 @@ void rt_hw_board_init(void)
 	AM2302_Init();
 	IR_Init();
 	OneWire_Init();
+	Debug_Init();
 }
 
 /*@}*/

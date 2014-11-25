@@ -24,6 +24,7 @@
 #include "AM2302.h"
 #include "IR.h"
 #include <DS18B20.h>
+#include <debug.h>
 
 /* board configuration */
 
